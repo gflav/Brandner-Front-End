@@ -1,0 +1,172 @@
+
+.single-bd_product {
+  
+  .post-content {
+    
+    color:$product-text-color;
+  
+    p, li {
+      font-size:13px;
+      line-height:18px;
+    }
+  
+    a, a:visited {
+      color:#fff;
+    }
+    
+    a:hover {
+      color:$brandnerdesign-blue;
+    }
+    
+    ul {
+      
+      li {
+        margin-bottom:20px;
+      }
+      
+    }
+
+  }
+  
+  .product-gallery {
+    
+    img {
+      max-width:100%;
+      height:auto;
+    }
+    
+  }
+  
+}
+
+.product-gallery-container {
+  @media #{$lg} {
+    margin-right:35px;
+  }
+}
+
+.product-gallery-thumbs-container {
+  
+  background-color:$product-thumb-bg;
+  background-image: url(../images/brandnerdesign-product-thumbnail-bg.png);
+  background-size: cover;
+  margin-top:40px;
+  padding-left:30px;
+  position: relative;
+
+  @media #{$lg} {
+    margin-right:35px;
+  }
+
+  .product-gallery-thumbs-container-headline{
+    min-height: 80px;
+    height: 100%;
+  }
+
+  
+  h1 {
+    text-transform:uppercase;
+    font-size:15px;
+    line-height:20px;
+    font-family: ProximaNova-Semibold;
+    margin-bottom:0;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+  }
+  
+  ul {
+    
+    
+    float:right;
+    
+    li {
+      
+      float:left;
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+
+      a{
+        width: 100%;
+        height: 100%;
+
+        img{
+          width: 100%;
+        }
+      }
+    }
+    
+  }
+
+
+  .product-thumbs {
+
+    li{
+      transition: all 0.3s $brandner-easing;
+    }
+
+    li a:hover {
+      outline: 4px solid #fff;
+      outline-offset: -4px;
+    }
+
+    li a.active{
+      outline: 4px solid #fff;
+      outline-offset: -4px;
+    }
+  }
+
+}
+
+.product-detail-container {
+  
+  margin-bottom:35px;
+
+  @media #{$lg} {
+    margin-right:35px;
+  }
+
+  padding-top:35px;
+  padding-left:35px;
+  padding-bottom:25px;
+  background-color:$product-detail-bg;
+  
+}
+
+.tile-grid {
+  
+  h3 {
+    font-family: ProximaNova-Semibold;
+    font-size:12px;
+    text-transform:uppercase;
+    color:$gray-medium;
+  }
+  
+  .product-finish-container {
+      
+    width:132px;
+    
+  }
+  
+  .product-finish {
+    overflow: hidden;
+    display: inline-block;
+    float: left;
+
+    &:hover{
+      img{
+        filter: grayscale(0%);
+        -webkit-filter: grayscale(0%);
+      }
+    }
+    
+    img {
+      transition: 0.3s $brandner-easing;
+      filter: grayscale(100%);
+      -webkit-filter: grayscale(100%);
+    }
+    
+  }
+  
+}

@@ -1,0 +1,93 @@
+
+.brandnerdesign-email-signup {
+  
+  background: #262626 url(../images/brandnerdesign-email-signup-bg.png) no-repeat 50% 50%;
+  background-size: cover;
+  
+  // fix blurry? doesn't seem to be working
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+  
+  position: relative;
+
+  padding: 20px;
+  
+  h3{
+    margin-bottom: 8px;
+    font-family: ProximaNova-Semibold;
+  }
+
+  p{
+    line-height: 35px;
+  }
+
+  input {
+    margin-right: 15px;
+    margin-bottom:10px;
+  }
+
+  .btn {
+    
+    font-size:18px;
+    background-color: #323f51;
+    color: #2e678d;
+    height: 40px;
+    border-color:#323f51;
+    padding-top:8px;
+    
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:50%;
+    
+  }
+  
+  @media #{$sm} {
+    
+    form {
+      position: relative;
+      margin-top:70px;
+    }
+    
+    input {
+      float:left; 
+    }
+    
+    .btn {
+      margin:0;
+      float:left;
+      width:auto;
+    }
+    
+  }
+  
+  @media #{$md} {
+    
+    form{
+      margin-top: 45px;
+    }
+     
+  }
+  
+  @media #{$lg} {
+    
+    padding: $grid-spacing ($grid-spacing * 2);
+    
+    .btn {
+      padding-left:$grid-spacing;
+      padding-right:$grid-spacing;
+    }
+    
+    input {
+      width: 320px;
+      margin-right:$grid-spacing;
+    }
+
+  }
+
+
+
+}

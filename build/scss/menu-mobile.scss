@@ -1,0 +1,129 @@
+
+// hide overflow when mobile menu is open
+.mobile-menu-open {
+  
+  overflow: hidden;
+  
+}
+
+#mobile-links {
+  
+  display: block;
+  
+  position: fixed; // NOTE: needed or else the width doesn't work
+  top: 60px;
+  left:0; // NOTE: needed so it goes all the way
+  
+  z-index: 100;
+  
+  width: 100%;
+  height: calc(100% - 60px);
+  padding-bottom: 40px;
+  
+  background: url(../images/brandnerdesign-mobile-menu-bg.png);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  
+  .dl-back a {
+    
+    transition: all 0.4s $brandner-easing;
+    color: #fff;
+    padding-left: 30px;
+    cursor: pointer;
+    
+    &:before {
+
+      font-family: 'icomoon' !important;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      content: "\e104";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+
+    }
+
+  }
+
+  li {
+
+    //transition: all 0.4s $brandner-easing;
+    
+    float:none;
+    
+    // has children
+    a:not(:only-child) {
+      
+      &:after {
+
+        font-family: 'icomoon' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+
+        /* Better Font Rendering =========== */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+        content: "\e105";
+        position: absolute;
+        right: $header-spacing-xs;
+        top: 50%;
+        transform: translateY(-50%);
+
+      }
+        
+    }
+        
+    a {
+      
+      border-bottom: 1px solid black;
+      
+      color: $brandnerdesign-light-gray;
+      padding: 10px 35px 10px 15px;
+      text-transform: uppercase;
+      width: 100%;
+      position: relative;
+
+      &:hover {
+        color: #fff;
+      }
+
+    }
+
+    //.sub-menu {
+    //  
+    //  //display: none;
+    //  position: absolute;
+    //  top: 0;
+    //  transform: translateX(100%);
+    //  width: 100%;
+    //  z-index: 10;
+    //
+    //  li{
+    //    position: relative;
+    //    a{
+    //      &:after{
+    //        //display: none;
+    //      }
+    //    }
+    //  }
+    //
+    //} //.sub-menu
+      
+  } //li
+  
+}

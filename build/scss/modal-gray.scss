@@ -1,0 +1,35 @@
+
+.modal-gray {
+  
+  background-color:#333;
+  
+  .btn-close {
+    
+    margin-bottom: 0;
+    
+    /*
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    */
+    
+    .close-label {
+      display:none;
+    }
+
+    .close-x {
+      
+      background-color: transparent;
+      color: #505050;
+      font-size: 35px;
+
+      &:hover{
+        color: #fff;
+      }
+      
+    }
+
+  }
+  
+}

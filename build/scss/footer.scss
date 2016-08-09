@@ -1,0 +1,265 @@
+
+footer {
+
+  background-image: url("../images/brandnerdesign-footer-bg.png");
+  
+  color: #e8e8e8;
+  font-family: ProximaNova-Medium;
+  font-size: 12px;
+  text-transform: uppercase;
+  
+  padding: $grid-spacing-sm;
+
+  #brandnerdesign-footer-top {
+    padding:0;
+    border-top: $hr-size solid $color-hr;
+    border-bottom: $hr-size solid $color-hr;
+  }
+
+  .trigger-top {
+    
+    transition: 0.3s;
+    font-size: 13px;
+    color: $brandnerdesign-light-gray;
+    font-family: ProximaNova-Medium;
+    padding: 15px 20px 15px 11px;
+    
+    float: right;
+    margin-top:0;
+    text-align: center;
+
+    &:after{
+      font-size: 18px;
+    }
+
+    &:hover{
+      color: #fff;
+
+    }
+
+  }
+
+  h3, h4{
+    color: #d8d8d8;
+    margin-bottom: 5px;
+    font-family: ProximaNova-Medium;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  p{
+    
+    color: $brandnerdesign-light-gray;
+    font-size: 12px;
+    line-height: 24px;
+    margin-bottom: 0;
+
+    a {
+      
+      color: #e8e8e8;
+      
+      &:hover, &:active {
+        color:$brandnerdesign-blue;
+      }
+      
+    }
+    
+  }
+
+
+  ul{
+    li{
+      a, a:visited{
+        
+        color: #787878;
+        transition: color 0.2s $brandner-easing;
+        padding: 2px 0;
+        display: inline-block;
+        font-size: 12px;
+        line-height: 18px;
+
+        &:hover{
+          color: #fff;
+        }
+      }
+
+    }
+  }
+  
+  @media #{$lg} {
+    
+    padding: $grid-spacing;
+    padding-bottom:0;
+    
+    .trigger-top {
+      text-align:left;
+    }
+    
+  }
+
+  #brandnerdesign-footer-breadcrumbs {
+
+    font-family: ProximaNova-Semibold;
+    color: $brandnerdesign-light-gray;
+    letter-spacing: .5px;
+    
+    padding:15px;
+    padding-left:0;
+
+    li:first-child{
+      a{
+        padding-left: 0;
+      }
+    }
+
+    span{
+      a{
+        padding-right: 10px;
+        line-height: 20px;
+        color: $brandnerdesign-light-gray;
+      }
+    }
+
+    a:hover{
+      color: #fff;
+    }
+    
+    span.breadcrumb_last {
+      color:#848168;
+    }
+    
+    span:first-child {
+      padding-left:0;
+    }
+    
+    span {
+      font-size: 12px;
+      line-height: 16px;
+    }
+    
+    span.divider {
+      padding-right:10px;
+      opacity:.5;
+    }
+    
+  }
+
+
+  #brandnerdesign-footer-content {
+
+    padding: 25px 15px;
+    
+    #brandnerdesign-footer-content-right {
+      margin-top: 30px;   
+    }
+    
+    #brandnerdesign-footer-content-left {
+      
+      .col-sm-6:first-child {
+        padding-right:25px;
+      }
+      
+    }
+    
+    @media #{$sm} {
+      
+      #brandnerdesign-footer-content-right {
+        padding-left:40px;
+        margin-top: 0;
+      }
+      
+    }
+    
+    @media #{$lg} {
+      
+      padding:$grid-spacing;
+      padding-right:115px;
+      
+      #brandnerdesign-footer-content-left {
+      
+        .col-sm-6:first-child {
+          padding-right:15px;
+        }
+        
+      }
+      
+      #brandnerdesign-footer-content-right{
+        padding-left:115px;
+        margin-top: 0;
+      }
+      
+    }
+
+  }
+
+
+  ul#brandnerdesign-footer-design-on {
+    
+    margin-top: 15px;
+    
+    li:first-child{
+      margin-right: 20px;
+    }
+
+    li{
+      
+      float: left;
+      a {
+        
+        opacity: .5; 
+        
+        &:hover {
+          opacity:1;
+        }
+        
+      }
+      
+    }
+    
+  }
+
+  .brandnerdesign-footer-legal {
+
+    position: relative;
+    border-top: $hr-size solid $color-hr;
+
+    ul {
+      
+      li {
+        
+        float: left;
+        line-height: 40px;
+        
+        a {
+          padding-right:45px;
+          font-family: ProximaNova-Medium;
+          font-weight: normal;
+          font-style: normal;
+          font-size: 10px;
+          text-transform: uppercase;
+        }
+        
+      }
+      
+    }
+
+    p {
+      text-align: left;
+      font-size: 10px;
+      color: #7c7c7c;
+    }
+
+    @media #{$sm} {
+
+      p {
+        text-align: right;
+        line-height: 40px;
+      }
+      
+    }
+
+  }
+
+
+}

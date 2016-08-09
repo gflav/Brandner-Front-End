@@ -1,0 +1,30 @@
+node_modules/
+.idea
+
+# wordpress
+htdocs/wp-content/uploads/sucuri/
+htdocs/wp-content/cache/config/
+htdocs/wp-content/uploads/profiles/
+htdocs/wp-content/ai1wm-backups/
+htdocs/wp-content/plugins/all-in-one-wp-migration/storage/
+htdocs/wp-content/uploads/wc-logs/
+
+# tbo
+wp-config-tbo.php
+
+# ignore the uploads because they're huuuge
+htdocs/wp-content/uploads/
+bd_homepage.psd
+assets/BD_Interior_product.psd
+assets/collections&Materials.psd
+
+# ALLOW FILES #
+!/Users/michaelbarton/Dropbox/git/apps/gabe/brandnerdesign.com/htdocs/wp-content/uploads/js_composer/
+# END ALLOW FILES #
+bd_homepage-sliced.psd
+bd_design_is_our_focus.psd
+BD_Contact_us.psd
+BD_Projects.psd
+BD_who_we_are.psd
+BD_Contact_us-sliced.psd
+creds.txt

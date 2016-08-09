@@ -1,0 +1,54 @@
+
+/*
+$sm: "(max-width: 480px)";
+$md: "(min-width: 481px) and (max-width: 767px)";
+$lg: "(min-width: 768px)";
+$xl: "(min-width: 1280px)";
+
+$sm-md: "(max-width: 767px)";
+$md-lg: "(min-width: 481px)";
+*/
+
+$xs: "";
+$sm: "(min-width:768px)";
+$md: "(min-width:860px)";
+$lg: "(min-width:1200px)";
+$xl: "(min-width:1280px)";
+
+.hidden-xs {
+  display:none;
+}
+
+@media #{$sm} {
+  .hidden-xs {
+    display:inherit;  
+  }
+	.hidden-sm {
+		display: none !important;
+	}
+}
+
+@media #{$md} {
+  .hidden-sm {
+		display: inherit !important;
+	}
+	.hidden-md {
+		display: none !important;
+	}
+  .visible-md {
+    display:inherit !important;
+  }
+}
+
+@media #{$lg} {
+  .hidden-md {
+		display: inherit !important;
+	}
+	.hidden-lg {
+		display: none !important;
+	}
+  .visible-lg {
+    display: inherit !important;
+  }
+}
+

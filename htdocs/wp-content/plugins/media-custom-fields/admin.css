@@ -1,0 +1,76 @@
+#tqmcf-list h4{	
+	font-weight:700;
+	margin:0;
+}
+
+#tqmcf-list-old h5{	
+	font-weight:700;
+	margin:0;
+}
+
+#tqmcf-list h4 small{	
+	font-weight:500;
+	font-size:12px;
+	color:#888;
+}
+
+#tqmcf-list p {	
+	font-weight:500;
+	margin:0;
+}
+
+#tqmcf-list p.desc {	
+	font-weight:500;
+	margin:0;
+	margin:- 0 12px 0;
+}
+
+
+
+#tqmcf-list-old p {	
+	font-weight:500;
+	margin:-12px 0 12px 0;
+	font-size:12px;
+}
+
+#tqmcf-list-old {
+	margin:30px 0 0 0 ;
+}
+
+
+#tqmcf-list a, #tqmcf-list-old a{	
+	font-size:12px;
+	font-weight:500;
+	padding:0 12px 0 0;
+}
+#tqmcf-list .item {
+	margin:0 0 28px 30px;
+}
+#tqmcf-list-old .item {
+	margin:0 0 12px 30px;
+}
+
+#mcf_imagelist {
+	margin:20px 0 0 0;
+}
+
+#mcf_imagelist h2{
+	margin:0px;
+	padding:0px;
+}
+
+#mcf_imagelist td {
+	padding:3px 0;
+}
+
+#mcf_imagelist img {
+	margin: 0 12px 0 0;
+}
+
+.mcf_pagination {
+	margin:12px 0;
+}
+
+.mcf_pagination .current {
+	color:#D54E21
+}

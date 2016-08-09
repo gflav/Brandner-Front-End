@@ -1,0 +1,126 @@
+
+.team-member-container {
+  
+  h2 {
+    font-size:39px;
+    line-height:1.4;
+    text-align:center;
+    margin-top:$grid-spacing;
+    margin-bottom:$grid-spacing;
+  }
+  
+  li {
+    margin-bottom:$grid-spacing-sm;
+  }
+  
+  .profile-photo {
+        
+    position:relative;
+    overflow:hidden;
+    
+    width:160px;
+    height:200px;
+    
+    margin-left:auto;
+    margin-right:auto;
+    
+    img {
+      
+      filter: grayscale(100%);
+      
+    }
+    
+    .profile-caption {
+      
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+      
+      background-color:rgba(0, 0, 0, .3);
+      
+      color:#fff;
+      font-size:25px;
+      line-height:50px;
+      
+      padding-left:15px;
+      padding-right:15px;
+      
+      transform:translateX(100%);
+      
+    }
+    
+    &:hover, &:active {
+      
+      img {
+        
+        transition: .4s $brandner-easing;
+        filter:grayscale(0%);
+        
+      }
+      
+      .profile-caption {
+        transition: .75s $brandner-easing;
+        transform:translateX(0%);
+      }
+      
+    }
+    
+  } //.profile-photo
+  
+  @media #{$sm} {
+    
+    ul {
+      
+      position: relative;
+      left:50%;
+      transform:translateX(-50%);
+      
+      text-align:center;
+      
+      li {
+        display:inline-block;
+        margin-left:20px;
+        margin-right:20px;
+      }
+      
+    }
+    
+  }
+  
+  @media #{$md} {
+    
+    ul {
+      
+      li {
+         margin-bottom:$grid-spacing;
+      }
+      
+    }
+      
+     
+  }
+  
+  @media #{$lg} {
+    
+    ul {
+      
+      left:auto;
+      transform:none;
+      text-align:left;
+      
+      margin-left:80px;
+      margin-right:80px;
+      
+      li {
+        display:inline-block;
+        margin-left:20px;
+        margin-right:20px;
+        margin-bottom:$grid-spacing;
+      }
+      
+    }
+    
+  }
+  
+}

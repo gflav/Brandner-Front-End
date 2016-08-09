@@ -1,0 +1,149 @@
+.modal-instance-gallery{
+
+  background-color:#333;
+
+  &.animate {
+    opacity: 1;
+    transition: all 0.5s $brandner-easing;
+
+    .modal-content {
+
+      opacity: 1;
+      transition: all 0.5s $brandner-easing;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+
+  .slick-slide{
+    position: relative;
+    ///max-height: 450px;
+  }
+
+  /*.slick-slide{
+    width: calc(85vw - 70px);
+  }*/
+
+  .slick-slide img, .slick-slide video {
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 100%;
+  }
+
+
+  .video-container{
+    margin-bottom: 0;
+  }
+
+  .modal-content{
+    width: 85%;
+    margin: 0 auto;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  .modal-gallery-header{
+    margin-bottom: 15px;
+    position: relative;
+    min-height: 20px;
+  }
+
+  #default-modal-close{
+   display: none;
+  }
+
+  .trigger-modal-close{
+    margin-bottom: 0;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    .close-x{
+      background-color: transparent;
+      color: #505050;
+      font-size: 35px;
+
+      &:hover{
+        color: #fff;
+      }
+    }
+
+  }
+
+
+  h1{
+    font-family: ProximaNova-Semibold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #505050;
+    margin-bottom: 0;
+  }
+
+
+  .counter{
+    font-size: 15px;
+    line-height: 17px;
+    color: #505050;
+    text-align: right;
+    font-family: ProximaNova-Semibold;
+  }
+
+  .btn-prev, .btn-next{
+    font-family: ProximaNova-Semibold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #505050;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    &:hover{
+      color: #fff;
+    }
+
+  }
+
+
+  .modal-gallery-nav {
+    margin-top: 15px;
+  }
+
+
+  .btn-prev{
+    padding-left: 20px;
+    padding-right: 10px;
+    position: relative;
+
+    span{
+      left: 0;
+      font-size: 20px;
+      display: inline-block;
+      transform: rotate(-90deg);
+      position: absolute;
+      top: -1px;
+    }
+  }
+
+
+  .btn-next{
+    padding-left: 10px;
+    padding-right: 20px;
+    position: relative;
+
+
+    span{
+      right: 0;
+      font-size: 20px;
+      display: inline-block;
+      transform: rotate(90deg);
+      position: absolute;
+      top: -1px;
+    }
+  }
+
+}

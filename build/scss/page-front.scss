@@ -1,0 +1,50 @@
+
+.home {
+  
+	background: $brandnerdesign-black url(../images/brandnerdesign-bg.png) left 0;
+  
+  .container-main {
+    
+    padding-left:0;
+    padding-right:0;
+    
+    @media #{$sm} {
+      padding-left:30px;
+      padding-right:30px;
+    }
+    
+    >#site-content {
+      
+      >.vc_row:not(:first-child) {
+        
+        padding-left:$grid-spacing-xs;
+        padding-right:$grid-spacing-xs;
+        
+        @media #{$sm} {
+          padding-left:0;
+          padding-right:0;
+        }
+        
+      }
+      
+    }
+    
+  }
+  
+  #site-content {
+    padding: 0px;
+  }
+  
+  footer {
+    
+    #brandnerdesign-footer-breadcrumbs {
+      
+      span.breadcrumb_last {
+        color: #787878;
+      }
+         
+    }
+    
+  }
+  
+}

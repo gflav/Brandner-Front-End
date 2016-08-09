@@ -1,0 +1,160 @@
+
+.capability-pillar-container {
+  
+  .vc_col-sm-4 {
+    width:100%;
+  }
+  
+  .vc_col-sm-8 {
+    width:100%;
+  }
+  
+  @media #{$lg} {
+    
+    .vc_col-sm-4 {
+      width:33.33333333%;
+    }
+    
+    .vc_col-sm-8 {
+      width:66.66666667%
+    }
+    
+  }
+  
+  &.pillar-tower {
+    
+    h1 {
+      text-transform: uppercase;
+      margin-bottom:25px;
+    }
+    
+    .btn {
+      margin-top:$grid-spacing-md;
+      margin-bottom:$grid-spacing-md;
+    }
+    
+    .vc_single_image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .wpb_single_image {
+      
+      .vc_figure {
+        
+        width:100%;
+        
+        a {
+          width:100%;
+        }
+        
+      }
+      
+      img {
+        width:100%;
+        height:auto;
+        max-height: 360px;
+      }
+      
+      &.wpb_content_element {
+        
+        overflow: hidden;
+        margin: 0 auto;
+        position: relative;
+  
+      }
+
+    }
+    
+    .wpb_singleimage_heading {
+      background-color: rgba(0,0,0,.5);
+      font-size: 15px;
+      line-height: 18px;
+      height: 80px;
+      width: 80%;
+      position: absolute;
+      bottom: 20px;
+      left: 10%;
+      text-align: center;
+      line-height: 80px;
+      font-family: ProximaNova-Medium;
+      text-transform: uppercase;
+      transition: all 0.3s $brandner-easing;
+    }
+    
+    .wpb_content_element {
+    
+      position: relative;
+
+      &:hover {
+        .wpb_singleimage_heading {
+          background-color: rgba(13,129,143,.25);
+        }
+      }
+
+    }
+    
+    @media #{$sm} {
+      
+      .btn {
+        margin-top: 15px; //margin-top:50px;
+        padding-left:$grid-spacing;
+        padding-right:$grid-spacing;
+      }
+      
+      .vc_col-sm-4 {
+        padding-right:$grid-spacing;
+      }
+      
+      .wpb_single_image {
+        float:left;
+        width:33%;
+      }
+      
+    }
+    
+    @media #{$lg} {
+      .btn {
+        margin-bottom:0;
+      }
+    }
+    
+  }
+  
+}
+
+.modal {
+
+  &.modal-capability {
+    
+    .modal-body {
+      
+      background-color:#333;
+      
+      .container {
+        
+        @media #{$md} {
+          padding-left:$grid-spacing;
+          padding-right:$grid-spacing;
+          padding-bottom:10px; // TODO: fix spacing
+        }
+        
+      }
+      
+    }
+  
+    .capability-pillar-container {
+      
+      &.pillar-tower {
+        
+        @media #{$md} {
+          
+        }
+        
+      }
+    
+    }
+    
+  }
+  
+}

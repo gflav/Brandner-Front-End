@@ -1,0 +1,84 @@
+
+#mobile-menu-button-container {
+  
+  display: block;
+  position: absolute;
+  z-index: 100;
+  top: 25px;
+  right: $header-spacing-xs;
+  cursor: pointer;
+  
+  // handles the X animation
+  &.active {
+
+    #mobile-menu-button span {
+      background: #fff;
+      transition: transform .25s $brandner-easing 0.15s, width .25s $brandner-easing 0.15s, top .25s $brandner-easing 0.15s, left .25s $brandner-easing 0.15s, background .1s $brandner-easing;
+    }
+
+    #mobile-menu-button span:nth-child(1) {
+      top: 5px;
+      width: 0%;
+      left: 50%;
+    }
+
+    #mobile-menu-button span:nth-child(2) {
+      transform: rotate(45deg);
+    }
+
+    #mobile-menu-button span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    #mobile-menu-button span:nth-child(4) {
+      top: 5px;
+      width: 0%;
+      left: 50%;
+    }
+    
+  }
+
+}
+
+#mobile-menu-button {
+  
+  width: 30px;
+  height: 20px;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s $brandner-easing;
+  -moz-transition: .5s $brandner-easing;
+  -o-transition: .5s $brandner-easing;
+  transition: .5s $brandner-easing;
+  cursor: pointer;
+
+  span {
+    
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: transform .25s $brandner-easing 0.15s, width .25s $brandner-easing 0.15s, top .25s $brandner-easing 0.15s, left .25s $brandner-easing 0.15s, background .1s $brandner-easing 0.1s;
+
+    &:nth-child(1) {
+      top: 0px;
+    }
+
+    &:nth-child(2),&:nth-child(3) {
+      top: 7px;
+    }
+
+    &:nth-child(4) {
+      top: 14px;
+    }
+
+  }
+
+}

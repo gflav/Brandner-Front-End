@@ -1,0 +1,199 @@
+
+// kill scroll on modal
+.modal-open {
+  
+  overflow: hidden;
+  
+  .modal-backdrop {
+    z-index:101;
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,.9);
+  }
+  
+  .modal {
+    z-index:102;
+  }
+  
+}
+
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-modal;
+  outline: 0;
+  //background-color: rgba(0,0,0,.9);
+}
+
+// TODO:
+.modal:not(.modal-instance-cart):not(modal-instance-checkout){
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trigger-modal-close {
+  
+  font-family: ProximaNova-Semibold;
+  float: right;
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 40px;
+  height: 40px;
+
+  @media #{$lg} {
+    margin-bottom: 50px;
+  }
+
+  &:hover{
+    .close-x {
+      background-color: #39586e;
+    }
+  }
+
+  .close-x{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #2f2f2f;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 25px;
+    font-family: ProximaNova-Light;
+    transition: background-color 0.3s $brandner-easing;
+
+  }
+  
+}
+
+.modal-instance-simple {
+
+  // TODO: move to backdrop
+  background-color: rgba(0,0,0,.9);
+
+  .modal-inner{
+    color: #fff;
+  }
+
+}
+
+.modal-instance-search, .modal-instance-simple {
+
+  opacity: 0;
+  display: none;
+
+  input{
+    background-color: #fff;
+  }
+
+
+  &.animate{
+    opacity: 1;
+    transition: all 0.5s $brandner-easing;
+
+    .modal-body{
+      transform: translate(0, 0);
+      opacity: 1;
+      transition: all 0.5s $brandner-easing;
+    }
+
+  }
+
+ .modal-body {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translate(0, 50%);
+
+    @media #{$lg} {
+      margin-top: 80px;
+      margin-bottom: 80px;
+    }
+
+  }
+}
+
+// TODO: don't like this long selector
+.modal:not(.modal-instance-cart):not(modal-instance-checkout):not(.modal-instance-search):not(.modal-instance-simple):not(.modal-instance-quote):not(.modal-instance-gallery) {
+  
+  display: block;
+  height: 100%;
+  opacity: 0;
+
+  &.animate {
+    
+    opacity: 1;
+    transition: all 0.5s $brandner-easing;
+
+    .modal-body {
+
+      opacity: 1;
+      transition: all 0.5s $brandner-easing;
+
+      // TODO: why
+      @media (min-height: 750px) and (min-width: 1025px) {
+        transform: translate(0, -50%);
+      }
+      
+    }
+
+  }
+
+  .trigger-modal-close{
+    margin-bottom: 0;
+    color: $brandnerdesign-light-gray;
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  .modal-dialog, .modal-content {
+    height: 100%;
+  }
+
+  .modal-body {
+    
+    margin: 0;
+    padding: $grid-spacing;
+    //background-color: $brandnerdesign-black;
+
+    // TODO:
+    @media (min-height: 750px) and (min-width: 1025px){
+      position: relative;
+      top: 50%;
+      transform: translate(0, -20%);
+      opacity: 0;
+      padding: 0;
+    }
+
+  }
+
+  .container {
+    background-color: $brandnerdesign-dark-gray;
+  }
+
+  .modal-inner {
+    
+    overflow: auto;
+    border: 1px solid #232323;
+    margin-bottom: 30px;
+    padding: $grid-spacing;
+
+  }
+
+}

@@ -1,0 +1,143 @@
+
+.dl-menuwrapper ul {
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.dl-menuwrapper li {
+	position: relative;
+}
+
+.dl-menuwrapper li a {
+	display: block;
+}
+
+.dl-menuwrapper .dl-menu {
+	opacity: 0;
+	pointer-events: none;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+  transform: translateX(100%);
+}
+
+.dl-menuwrapper .dl-menu.dl-menu-toggle {
+	transition: all 0.4s $brandner-easing;
+}
+
+.dl-menuwrapper .dl-menu.dl-menuopen {
+	opacity: 1;
+	pointer-events: auto;
+  transform: translateX(0px);
+}
+
+/* Hide the inner submenus */
+.dl-menuwrapper li .sub-menu {
+	display: none;
+}
+
+/* 
+When a submenu is openend, we will hide all li siblings.
+For that we give a class to the parent menu called "dl-subview".
+We also hide the submenu link. 
+The opened submenu will get the class "dl-subviewopen".
+All this is done for any sub-level being entered.
+*/
+.dl-menu.dl-subview li,
+.dl-menu.dl-subview li.dl-subviewopen > a,
+.dl-menu.dl-subview li.dl-subview > a {
+	display: none;
+}
+
+.dl-menu.dl-subview li.dl-subview,
+.dl-menu.dl-subview li.dl-subview .sub-menu,
+.dl-menu.dl-subview li.dl-subviewopen,
+.dl-menu.dl-subview li.dl-subviewopen > .sub-menu,
+.dl-menu.dl-subview li.dl-subviewopen > .sub-menu > li {
+	display: block;
+}
+
+/* Dynamically added submenu outside of the menu context */
+.dl-menuwrapper > .sub-menu {
+	position: absolute;
+	width: 100%;
+	top: 50px;
+	left: 0;
+	margin: 0;
+}
+
+/** Menu Animation (the first animation once open) **/
+
+.dl-menu.dl-animate-in-1 {
+	animation: MenuAnimIn1 0.4s $brandner-easing;
+}
+
+@keyframes MenuAnimIn1 {
+	0% {
+		transform: translateX(-100%);
+		//opacity: 0;
+	}
+	20% {
+		//opacity: 0.5;
+	}
+	100% {
+		transform: translateX(0);
+		//opacity: 1;
+	}
+}
+
+.dl-menu.dl-animate-out-1 {
+	animation: MenuAnimOut1 0.4s $brandner-easing;
+}
+
+@keyframes MenuAnimOut1 {
+	0% {
+    //opacity:1;
+    transform: translateX(0);
+  }
+	50% {
+		//transform: translateZ(-250px) rotateY(30deg);
+	}
+	99% {
+		//transform: translateZ(-372.5px) rotateY(15deg);
+		//opacity: .5;
+    transform: translateX(-100%);
+    //opacity:0;
+	}
+	100% {
+		//transform: translateZ(-500px) rotateY(0deg);
+		//opacity: 0;
+    transform: translateX(0);
+	}
+}
+
+/** Sub Nav Animation **/
+
+.dl-menuwrapper > .sub-menu.dl-animate-in-1 {
+	animation: SubMenuAnimIn1 0.4s $brandner-easing;
+}
+
+@keyframes SubMenuAnimIn1 {
+	0% {
+    transform: translateX(100%);
+		//opacity: 0;
+	}
+	100% {
+		transform: translateX(0px);
+		//opacity: 1;
+	}
+}
+
+.dl-menuwrapper > .sub-menu.dl-animate-out-1 {
+	animation: SubMenuAnimOut1 0.4s $brandner-easing;
+}
+
+@keyframes SubMenuAnimOut1 {
+	0% {
+		transform: translateX(0%);
+		//opacity: 1;
+	}
+	100% {
+		transform: translateX(100%);
+		//opacity: 0;
+	}
+}

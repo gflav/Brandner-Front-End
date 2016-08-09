@@ -1,0 +1,262 @@
+
+/**
+ * TODO: moving forward, use content-border.scss classes
+ */
+
+// top part of the projects template (aka border w/ wood)
+#project-intro {
+
+  background-color: #151515;
+
+  h1 {
+    margin-bottom: 12px;
+  }
+
+  p {
+    
+    font-family: ProximaNova-Light;
+    margin-bottom: 12px;
+    
+    a {
+      font-family:ProximaNova-Light; 
+    }
+    
+  }
+
+  img {
+    width: 100%;
+  }
+
+  // column on the left
+  .project-intro-info {
+    padding: 15px;
+    background-color: #151515;
+  }
+  
+  > div:first-child {
+    
+    width:100%;
+    
+  }
+  
+  > div:last-child {
+    
+    width:100%;
+    
+  }
+  
+  @media #{$md} {
+    
+    .project-intro-info {
+      padding:$grid-spacing-md;
+    }
+    
+    > div:first-child {
+    
+      width:50%;
+      
+    }
+    
+    > div:last-child {
+      
+      width:50%;
+      
+    }
+    
+  }
+  
+  @media #{$lg} {
+    
+    background-color: $brandnerdesign-dark-gray; // NOTE: gives the spacing under the image
+
+    .project-intro-info {
+      padding:$grid-spacing;
+      padding-right:20px;
+    }
+    
+    > div:first-child {
+    
+      width:40%;
+      
+    }
+    
+    > div:last-child {
+      
+      width:60%;
+      
+    }
+    
+    img {
+      margin-top: -$grid-spacing;
+    }
+    
+  }
+
+} //#project-intro
+
+
+#project-featured-list {
+  
+  background-color: $brandnerdesign-dark-gray;
+  
+  padding: 15px;
+  padding-top:25px;
+  
+  h3 {
+    font-size:22px;
+    margin-bottom: 20px;
+  }
+
+  a {
+    font-size: 17px;
+    line-height: 19px;
+  }
+
+  li {
+    line-height: 40px;
+  }
+  
+  @media #{$md} {
+    
+    li {
+      padding-left:$grid-spacing;
+    }
+    
+  }
+
+  @media #{$lg} {
+
+    padding: $grid-spacing;
+    padding-top:0;
+    
+    li {
+      padding-left:$grid-spacing;
+    }
+
+  }
+
+}
+
+#project-featured-container {
+  
+  background-color: $brandnerdesign-black;
+  
+  padding-top: 80px;
+
+}
+
+// aka content teaser
+.project-featured {
+  
+  background-color: $brandnerdesign-dark-gray;
+  margin-bottom: 80px;
+  padding: 15px;
+
+  // image width from comps: 760x400
+  
+  .image {
+    
+    margin-top: 20px;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    
+    width:100%;
+    height:300px;
+    
+  }
+
+  .col-sm-12 {
+    > a {
+      position: absolute;
+    }
+  }
+  
+  @media #{$sm} {
+    
+    .image {
+      margin-top:0;
+      height:400px;
+    }
+    
+  }
+
+  @media #{$md} {
+    
+    padding: $grid-spacing;
+    
+  }
+  
+  @media #{$lg} {
+    
+    .btn-group {
+      margin-top:50px;
+    }
+    
+  }
+
+}
+
+.project-featured:last-child{
+  margin-bottom: 0;
+}
+
+.project-caption {
+  
+  background-color: rgba(0, 0, 0, .5);
+  
+  position:absolute;
+  bottom:0;
+  right:0;
+  
+  color:#fff;
+  font-size:13px;
+  padding:15px;
+  
+  max-width:100%;
+  font-family: ProximaNova-Semibold !important;
+  display: inline-block;
+  text-transform: uppercase;
+  border:0px solid #fff;
+
+  @media #{$sm} {
+    bottom:8%;
+    right:5%;
+    //right:15px;
+    //bottom:15px;
+  }
+
+  span{
+    color: #b5b5b5;
+  }
+
+  &.icon-project{
+
+    &:before{
+
+      content: "\e903";
+
+      font-family: 'icomoon' !important;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      position: absolute;
+      font-size: 20px;
+      right: 12px;
+      top: 9px;
+    }
+
+    padding-right: 40px;
+  }
+
+
+}

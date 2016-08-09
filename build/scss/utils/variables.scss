@@ -1,0 +1,33 @@
+
+$zindex-modal: 1000;
+
+/* easeInOutCubic */
+$brandner-easing: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+// grid spacing
+
+$grid-spacing-xs:10px;
+$grid-spacing-sm:20px;
+$grid-spacing-md:20px;
+
+$framework-spacing:15px; // bootstrap's spacing
+$grid-spacing: 40px;
+$grid-padding: $grid-spacing; // @deprecated
+
+// global
+
+$hr-size:2px;
+
+// header
+
+$header-logo-top-padding:28px;
+$header-color-xs:#1c1c1c;
+$header-color-lg:$color-gray-dark;
+$header-size-xs:60px;
+$header-size-lg:120px;
+
+$header-spacing-xs: 20px;
+
+// promo units
+
+$color-promo-text: #848383;

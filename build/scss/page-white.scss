@@ -1,0 +1,77 @@
+    
+.page-template-page-white {
+  
+  #site-content {
+    
+    background:url(../images/background/bg-mountain-white.jpg) #f8f5f2 no-repeat right bottom;
+    margin-bottom:-1px; // TODO: fix
+    
+    padding-left:$grid-spacing;
+    padding-right:$grid-spacing;
+    
+    h1, h2, h3, p {
+     color:#1c1c1c; 
+    }
+    
+    h3 {
+      font-size:17px;
+      font-family:ProximaNova-Semibold;
+      margin-top:30px;
+      margin-bottom:0;
+    }
+    
+    p {
+      
+      font-size:15px;
+      line-height:26px;
+      font-family:ProximaNova-Regular;
+      font-weight:500;
+      
+    }
+    
+    a {
+      
+      &:hover {
+        color:#1c1c1c;
+      }
+      
+    }
+    
+  }
+  
+  @media #{$md} {
+    
+    #site-content {
+  
+      padding-top:65px;
+      padding-left:$grid-spacing * 2;
+      padding-right:$grid-spacing * 2;
+      
+     }
+    
+  }
+  
+  
+  @media #{$lg} {
+    
+   #site-content {
+    
+    padding-top:95px;
+    padding-left:70px;
+    padding-right:70px;
+    padding-bottom:150px;
+    
+    h1 {
+      padding-left:50px;
+    }
+    
+    .vc_col-sm-6 {
+      padding-left:50px;
+      padding-right:50px;      
+    }
+    
+   }
+    
+  }
+  
+}

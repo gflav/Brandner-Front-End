@@ -1,0 +1,49 @@
+
+.btn, a.btn:visited, button, .woocommerce #respond input#submit, .woocommerce a.button, .woocommerce button.button, .woocommerce input.button{
+  
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-align: center;
+  border: medium none;
+  font-family: ProximaNova-Medium;
+  color: $brandnerdesign-purple;
+
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: transparent;
+  transition: all 0.2s $brandner-easing;
+  text-transform: uppercase;
+  border: 2px solid rgba(78, 90, 125, 0.2);
+  margin-right: 8px;
+
+  &:hover:not(.btn-disabled) {
+    color: $brandnerdesign-aqua;
+    border: 2px solid $brandnerdesign-aqua;
+  }
+  
+  &.btn-disabled {
+    
+    background-color: #000;
+    cursor: default;
+    border: 2px solid #000;
+    
+    color: $brandnerdesign-purple;
+    
+  }
+
+}
+
+.btn-group {
+  
+  margin: 15px 0;
+
+  .btn {
+    margin-bottom: 8px;
+    float: left;
+  }
+  
+}

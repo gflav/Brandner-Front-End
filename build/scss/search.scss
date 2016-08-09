@@ -1,0 +1,247 @@
+
+.modal-type-search {
+  
+  background:none;
+  width:70%;
+  margin-left:auto;
+  margin-right:auto;
+  
+  overflow-y: auto !important;
+  
+  .container {
+    padding-left:0;
+    padding-right:0;
+  }
+  
+}
+
+.search-form {
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $brandnerdesign-dark-gray;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: $brandnerdesign-dark-gray;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: $brandnerdesign-dark-gray;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: $brandnerdesign-dark-gray;
+  }
+
+}
+
+
+.search-count-container{
+  color: #fff;
+  font-size: 22px;
+  font-style: italic;
+  padding: 25px 20px;
+}
+
+
+
+ul.search-results-list{
+  margin-bottom: 30px;
+
+  @media #{$lg} {
+    margin-bottom: 50px;
+  }
+
+
+  li{
+    transition: background-color 0.3s;
+
+    &:hover{
+      background-color: #1a1a1a;
+    }
+
+
+    &:first-child{
+      a{
+        border-top: 1px solid #303030;
+      }
+    }
+
+
+    a{
+      font-size: 18px;
+      font-family: ProximaNova-Light;
+      padding: 8px 35px;
+      display: block;
+    }
+
+    border-bottom: 1px solid #303030;
+  }
+}
+
+.search-form-container{
+  position: relative;
+}
+
+input.search-field{
+  width:100%;
+  height: 50px;
+  font-size: 18px;
+  box-sizing: border-box;
+  padding:15px;
+  color:#000;
+  border:none;
+
+  @media #{$lg} {
+    width:calc(100% - 200px);
+    float: left;
+    height: 80px;
+    font-size: 30px;
+  }
+
+}
+
+
+.search-submit{
+  cursor: pointer;
+  height: 50px;
+  line-height: 50px;
+  width: 150px;
+  margin: 0 auto;
+  font-family: ProximaNova-Medium;
+  font-size: 18px;
+  padding: 0;
+  text-align: left;
+  padding-left: 22px;
+  transition: background-color 0.3s $brandner-easing;
+  position: relative;
+  display: block;
+  margin-top: 15px;
+  border:none;
+  color: #fff;
+  text-transform: uppercase;
+  background-color:$search-btn-color;
+
+
+
+  &:hover{
+    background-color: #2f2f2f;
+    color: #fff;
+    border: none;
+
+    &:after {
+      transform: translateY(-50%) scale(.9);
+    }
+  }
+
+  &:after{
+    transition: transform 0.3s;
+    font-size: 20px;
+    margin-left: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+
+
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e902";
+  }
+
+
+  @media #{$lg} {
+    margin: 0;
+    height: 80px;
+    line-height: 80px;
+    width: 200px;
+    font-size: 23px;
+    padding-left: 30px;
+
+    &:after{
+      font-size: 30px;
+    }
+  }
+
+}
+
+.search-pager-label{
+  display: inline-block;
+  float: left;
+  margin-right: 30px;
+  font-family: ProximaNova-Medium;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  color: $brandnerdesign-blue;
+  text-transform: uppercase;
+}
+
+.page-numbers.dots{
+  color: $brandnerdesign-blue;
+  line-height: 40px;
+  display: inline-block;
+  padding: 0 10px;
+  height: 40px;
+  float: left;
+}
+
+
+a.page-numbers:not(.dots){
+  cursor: pointer;
+}
+.page-numbers:not(.dots){
+
+  box-sizing: border-box;
+  font-size: 19px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: medium none;
+  font-family: ProximaNova-Medium;
+  color: $brandnerdesign-blue;
+  display: inline-block;
+  text-decoration: none;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: transparent;
+  transition: all 0.2s $brandner-easing;
+  text-transform: uppercase;
+  border: 1px solid $brandnerdesign-blue;
+  //border-left: none;
+  float: left;
+  margin-left: -1px;
+
+  &:first-child{
+    border-left: 1px solid $brandnerdesign-blue;
+  }
+
+  &:last-child{
+    border-left: 1px solid $brandnerdesign-blue;
+  }
+
+
+  &:hover{
+    background-color: rgba(50,142,255,.1);
+
+  }
+}
+
+.page-numbers.current:not(.dots){
+  background-color: rgba(50,142,255,.1);
+}
+
+.page-numbers.next{
+  display: none;
+}
+
+
+
