@@ -149,6 +149,7 @@
     });
     
     /*
+     *old way using modal
     $('.btn-share').click(function($evt) {
       $evt.preventDefault();
       var $this = $(this);
@@ -169,6 +170,7 @@
       }
     });*/
     
+    /*
     $('.btn-share').hover(
       function() {
         var $this = $(this);
@@ -193,6 +195,7 @@
         
       }
     );
+    */
     
     $('.btn-share').click(function($evt) {
       $evt.preventDefault();

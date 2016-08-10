@@ -52,12 +52,12 @@
 
   <div class="product-gallery-thumbs-container">
     <div class="row">
-      <div class="col-md-3">
+      <div class="tbo-col-sm-6 tbo-col-md-3">
         <div class="product-gallery-thumbs-container-headline">
             <h1><?php echo $post->post_title; ?></h1>
          </div>
       </div>
-      <div class="col-md-9">
+      <div class="tbo-col-sm-6 tbo-col-md-9">
         <?php if(!empty($thumbs)): ?>
         <ul class="product-thumbs">
         <?php echo join('', $thumbs); ?>

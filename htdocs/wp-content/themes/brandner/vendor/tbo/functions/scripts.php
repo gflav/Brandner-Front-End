@@ -3,7 +3,7 @@
 add_action( 'wp_enqueue_scripts', 'tbo_scripts');
 function tbo_scripts() {
   
-  tbo_scripts_deregister();
+  //tbo_scripts_deregister();
   
   // TODO: all.min.css / js
   
@@ -26,12 +26,5 @@ function tbo_scripts() {
       wp_enqueue_script($handle, $baseUri.$script, $deps=array('jquery'), $version, $in_footer=TRUE);
     }
   }
-  
-}
-
-function tbo_scripts_deregister() {
-  
-  // remove visual composers google fonts because we don't use them
-  // TODO:
   
 }

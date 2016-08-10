@@ -28,6 +28,9 @@ foreach($vendor_files as $file) {
 	locate_template("$vendor_path/$file", $load=TRUE, $require_once=TRUE);	
 }
 
+// glflav
+locate_template("vendor/gflav/functions.php", $load=TRUE, $require_once=TRUE);	
+
 // TODO: don't do this
 add_filter('post_type_link', 'bd_custom_perms', 20, 4);
 function bd_custom_perms($post_link, $post, $leavename, $sample){

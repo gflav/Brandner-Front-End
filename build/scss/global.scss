@@ -130,3 +130,34 @@ li{
   }
   
 }
+
+.tbo-col-sm-6 {
+  position:relative;
+}
+
+@media #{$sm} {
+  
+  .tbo-col-sm-6 {
+    float:left;
+    width:50%;
+  }
+  
+}
+
+@media #{$md} {
+  
+  .tbo-col-md-9 {
+    float:left;
+    width:75%;
+    padding-left:15px;
+    padding-right:15px;
+  }
+  
+  .tbo-col-md-3 {
+    padding-left:15px;
+    padding-right:15px;
+    float:left;
+    width:25%;
+  }
+  
+}

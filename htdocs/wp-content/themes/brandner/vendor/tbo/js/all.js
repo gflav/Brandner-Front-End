@@ -262,6 +262,7 @@ window.brandnerdesign = brandnerdesign;
     });
     
     /*
+     *old way using modal
     $('.btn-share').click(function($evt) {
       $evt.preventDefault();
       var $this = $(this);
@@ -282,6 +283,7 @@ window.brandnerdesign = brandnerdesign;
       }
     });*/
     
+    /*
     $('.btn-share').hover(
       function() {
         var $this = $(this);
@@ -306,6 +308,7 @@ window.brandnerdesign = brandnerdesign;
         
       }
     );
+    */
     
     $('.btn-share').click(function($evt) {
       $evt.preventDefault();
