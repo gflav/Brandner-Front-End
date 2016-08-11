@@ -556,7 +556,8 @@ window.brandnerdesign = brandnerdesign;
           html: null,
           selector: null,
           css_class: '',
-          footer: ''
+          footer: '',
+          cache: true
         };
         
         var $options = $.extend({}, $defaults, $o);
@@ -569,6 +570,11 @@ window.brandnerdesign = brandnerdesign;
         
         if ($options.url) {
           var $url = $options.url;
+          if(!$options.cache) {
+            if($url.indexOf('?') !== -1) {
+              $url += '&cid=' + (new Date().getTime());
+            }
+          }
           if ($options.selector) {
             $url += ' ' + $options.selector;
           }
@@ -947,13 +953,19 @@ window.brandnerdesign = brandnerdesign;
         $evt.preventDefault();
         var $pid = $(this).attr('data-product-id');
         $modal.open('cart', {url: '/checkout/?add-to-cart='+$pid, selector: '#site-content .woocommerce'});
+        $modal.getInstance('cart').on('modal.close', function() {
+          $modal.remove('cart');
+        });
       });
       
       // add to cart
       $('.btn-cart-add').click(function($evt) {
         $evt.preventDefault();
         var $pid = $(this).attr('data-product-id');
-        $modal.open('cart', {url: '/checkout/?add-to-cart='+$pid, selector: '#site-content .woocommerce'});
+        $modal.open('cart', {url: '/cart/?add-to-cart='+$pid, selector: '#site-content .woocommerce', cache:false});
+        $modal.getInstance('cart').on('modal.close', function() {
+          $modal.remove('cart');
+        });
       });
       
       // view cart
@@ -1378,7 +1390,7 @@ window.brandnerdesign = brandnerdesign;
 
 				if( $submenu.length > 0 ) {
 
-					var $flyin = $submenu.clone().css( 'opacity', 0 ).insertAfter( self.$menu ),
+					var $flyin = $submenu.clone().insertAfter( self.$menu ),
 						onAnimationEndFn = function() {
 							self.$menu.off( self.animEndEventName ).removeClass( self.options.animationClasses.classout ).addClass( 'dl-subview' );
 							$item.addClass( 'dl-subviewopen' ).parents( '.dl-subviewopen:first' ).removeClass( 'dl-subviewopen' ).addClass( 'dl-subview' );
@@ -1386,6 +1398,7 @@ window.brandnerdesign = brandnerdesign;
 						};
 
 					setTimeout( function() {
+
 						$flyin.addClass( self.options.animationClasses.classin );
 						self.$menu.addClass( self.options.animationClasses.classout );
 						if( self.supportAnimations ) {

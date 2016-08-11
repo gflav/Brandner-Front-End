@@ -1,7 +1,12 @@
 .modal-instance-cart, .modal-instance-checkout{
+  
   height: 100%;
   opacity: 0;
   display: none;
+  
+  h2 {
+    text-transform: uppercase;
+  }
 
 
   .btn, a.btn:visited{
@@ -43,11 +48,13 @@
   }
 
   .modal-inner{
+    
     max-width: 700px;
     position: relative;
     background-image: url(../images/brandnerdesign-modal-cart-bg.png);
     background-size: cover;
-    padding: 30px;
+    padding: $grid-spacing;
+    padding-bottom: $grid-spacing - 8;
     opacity: 0;
     transform: translateY(50%);
 
@@ -58,7 +65,7 @@
       .trigger-modal-close{
         display: block;
         position: absolute;
-        top:0px;
+        top:-2px;
         right: 10px;
         span{
           background-color: transparent;
@@ -66,43 +73,67 @@
         }
       }
     }
-
-    .btn-group{
+    
+    .btn-group {
       margin: 0;
     }
-
-    .cart-content{
-      margin-top: 30px;
-      margin-bottom: 30px;
+    
+    .cart-content {
+      margin-top: $grid-spacing;
+      margin-bottom: $grid-spacing;
       overflow: auto;
     }
-
-    .cart-item{
-      float: left;
-      display: inline-block;
-      margin-right: 30px;
-    }
-
-
-
-    .cart-details{
-      display: inline-block;
-      float: left;
-      font-size: 13px;
-      color: $brandnerdesign-light-gray;
-    }
-
-
-    .cart-product-name{
-      color: #fff;
-      font-family: ProximaNova-Semibold;
-    }
-
-    .cart-footer{
-      padding-top: 30px;
+    
+    .cart-footer {
+      padding-top: $grid-spacing;
       border-top: 2px solid #484848;
     }
-
+    
   }
 
+}
+
+.woocommerce {
+  
+  overflow-x:hidden;
+  
+  .detail-line {
+    font-family:ProximaNova-Regular;
+    font-size: 13px;
+    color: #9e9e9e;
+    text-transform: uppercase;
+  }
+  
+  .product-title {
+    color:#ededed;
+  }
+  
+  .cart-col {
+    box-sizing: border-box;
+    position: relative;
+    display:inline-block;
+    float:left;
+    width:33.3333333%;
+    padding-left:15px;
+    padding-right:15px;
+  }
+  
+  .cart-col-first {
+    min-width:160px;
+    max-width:160px;
+  }
+  
+  .product-thumbnail {
+    
+    img {
+      width:120px;
+      height:120px;
+    }
+    
+  }
+  
+  @media #{$sm} {
+    
+  }
+  
 }

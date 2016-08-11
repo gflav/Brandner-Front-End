@@ -25,7 +25,7 @@
 <div class="btn-group">
   <a class="btn btn-disabled" href="#"><?php echo sprintf(_n('%d Piece', '%d Pieces', $count, 'brandner'), $count); ?> Available</a>
   <?php if(!empty($count)): ?>
-  <a class="btn btn-gallery" href="<?php echo get_the_permalink($post); ?>" data-route="<?php echo tbo_get_api_route($post); ?>" data-post-type="<?php echo $post->post_type; ?>" data-post-id="<?php echo $post->ID; ?>">View Gallery</a>
+  <a class="btn btn-gallery" href="<?php echo get_the_permalink($post); ?>" title="<?php echo get_the_title($post); ?>" data-route="<?php echo tbo_get_api_route($post); ?>" data-post-type="<?php echo $post->post_type; ?>" data-post-id="<?php echo $post->ID; ?>">View Gallery</a>
   <?php endif; ?>
 </div>
 <?php elseif($type == 'press-release'): ?>

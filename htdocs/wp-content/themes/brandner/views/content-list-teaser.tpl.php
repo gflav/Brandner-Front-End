@@ -24,7 +24,7 @@
     </div>
     <?php if(!empty($featured_image_src)): ?>
       <?php if($post->post_type != 'press-release'): ?>
-      <div class="col-sm-12 col-lg-7 col-xl-8"><div class="image trigger-gallery" data-route="<?php echo tbo_get_api_route($post); ?>" style="background:url(<?php echo $featured_image_src; ?>) no-repeat;"> <div class="project-caption icon-project">VIEW GALLERY</div></div></div>
+      <div class="col-sm-12 col-lg-7 col-xl-8"><div class="image trigger-gallery" title="<?php echo get_the_title($post); ?>" data-route="<?php echo tbo_get_api_route($post); ?>" style="background:url(<?php echo $featured_image_src; ?>) no-repeat;"> <div class="project-caption icon-project">VIEW GALLERY</div></div></div>
       <?php else: ?>
       <div class="col-sm-12 col-lg-7 col-xl-8"><div class="image" style="background:url(<?php echo $featured_image_src; ?>) no-repeat;"></div> </div>
       <?php endif; ?>

@@ -107,7 +107,8 @@
           html: null,
           selector: null,
           css_class: '',
-          footer: ''
+          footer: '',
+          cache: true
         };
         
         var $options = $.extend({}, $defaults, $o);
@@ -120,6 +121,11 @@
         
         if ($options.url) {
           var $url = $options.url;
+          if(!$options.cache) {
+            if($url.indexOf('?') !== -1) {
+              $url += '&cid=' + (new Date().getTime());
+            }
+          }
           if ($options.selector) {
             $url += ' ' + $options.selector;
           }

@@ -30,13 +30,19 @@
         $evt.preventDefault();
         var $pid = $(this).attr('data-product-id');
         $modal.open('cart', {url: '/checkout/?add-to-cart='+$pid, selector: '#site-content .woocommerce'});
+        $modal.getInstance('cart').on('modal.close', function() {
+          $modal.remove('cart');
+        });
       });
       
       // add to cart
       $('.btn-cart-add').click(function($evt) {
         $evt.preventDefault();
         var $pid = $(this).attr('data-product-id');
-        $modal.open('cart', {url: '/checkout/?add-to-cart='+$pid, selector: '#site-content .woocommerce'});
+        $modal.open('cart', {url: '/cart/?add-to-cart='+$pid, selector: '#site-content .woocommerce', cache:false});
+        $modal.getInstance('cart').on('modal.close', function() {
+          $modal.remove('cart');
+        });
       });
       
       // view cart

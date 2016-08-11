@@ -7,7 +7,11 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="cart-header">
-          <h2><?php the_title(); ?></h2>
+          <?php
+            $cart_count = WC()->cart->get_cart_contents_count();
+            $title = sprintf( _n( '%s item', '%s items', $cart_count, 'brandner' ), $cart_count ) . ' added to your cart';
+          ?>
+          <h2><?php echo $title; ?></h2>
           <a class="trigger-modal-close" href=""><span class="close-x">X</span></a>
         </div>
       </div>
