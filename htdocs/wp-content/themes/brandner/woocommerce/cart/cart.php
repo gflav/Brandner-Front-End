@@ -19,7 +19,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+?>
 
+<div class="hidden">
+<?php wc_print_notices(); ?>
+</div>
+
+<?php
   foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
     
     $_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
@@ -78,12 +84,17 @@ if ( ! defined( 'ABSPATH' ) ) {
               $price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
               echo '<div class="detail-line">Price: ' . $price . '</div>';
               
+              // subtotal
+              $subtotal = apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
+              echo '<div class="detail-line">Total: ' . $subtotal . '</div>';
+              
+              
             ?>
           </div>
           
         </div>
         
-        <div class="cart-col cart-col-third" style="display:none;">
+        <div class="cart-col cart-col-third">
           
           <div class="product-remove">
             <?php

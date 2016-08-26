@@ -23,6 +23,7 @@ $vendor_files = [
 	'functions/filter.php',
   'functions/woocommerce.php',
   'functions/menu-mobile.php',
+  'functions/gravity-forms.php',
 ];
 foreach($vendor_files as $file) {
 	locate_template("$vendor_path/$file", $load=TRUE, $require_once=TRUE);	
@@ -71,6 +72,21 @@ function bd_custom_perms($post_link, $post, $leavename, $sample){
 
 		$term_parent = get_term($term->parent, 'finish_category');
 		$post_link = home_url('materials/'.$term_parent->slug.'/'.$term->slug.'/'.$post->post_name.'.html');
-	}
+	} else if($post->post_type == 'product') {
+    // woocommerce product
+    $matches = get_posts([
+      'numberposts' => 1,
+      'post_type' => 'bd_product',
+      'meta_query' => [
+          'key' => 'product',
+          'value' => $post->ID,
+          'compare' => 'IN'
+        ]
+      ]);
+    if(!empty($matches)) {
+      $display = array_pop($matches);
+      $post_link = get_permalink($display);
+    }
+  }
 	return $post_link;
 }

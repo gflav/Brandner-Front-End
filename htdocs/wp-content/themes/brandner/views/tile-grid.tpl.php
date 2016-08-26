@@ -44,10 +44,10 @@
       <?php echo $tile->thumb; ?>
       <div class="product-finish-tooltip" style="display:none;">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col col-first tile-image">
             <?php echo $tile->image; ?>
           </div>
-          <div class="col-sm-6">
+          <div class="col col-second tile-details">
             <?php echo $tile->details; ?>
           </div>
         </div>

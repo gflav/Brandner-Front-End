@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Replace Image
  * Description: Upload a new version of an image without deleting the old image attachment, so that references to the image remain intact.
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: Potent Plugins
  * Author URI: http://potentplugins.com/?utm_source=replace-image&utm_medium=link&utm_campaign=wp-plugin-author-uri
  * License: GNU General Public License version 2 or later
@@ -46,9 +46,10 @@ function hm_replace_image_page() {
 }
 
 
-add_action('admin_enqueue_scripts', function() {
+add_action('admin_enqueue_scripts', 'hm_replace_image_enqueue_scripts');
+function hm_replace_image_enqueue_scripts() {
 	wp_enqueue_script('hm-replace-image', plugins_url('js/hm-replace-image.js', __FILE__));
-});
+}
 
 add_action('edit_attachment', 'hm_replace_image_edit_attachment');
 function hm_replace_image_edit_attachment($postId) {

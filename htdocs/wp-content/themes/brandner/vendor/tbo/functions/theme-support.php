@@ -40,18 +40,13 @@ function tbo_setup_theme() {
 	set_post_thumbnail_size( 1200, 9999 );
   
   // thumbnail sizes
-  add_image_size('finishes-large', 290, 290, true); // TODO: check if needed
-  add_image_size('finishes-thumb', 33, 33, true); // TODO: check if needed
-  add_image_size('finishes-archive-thumb', 256, 130, true ); // TODO: check if needed
-  add_image_size('limited', 763, 374, true); // TODO: check if needed
-	
+  add_image_size('finishes-large', 290, 290, true); // finish tooltip
+  add_image_size('finishes-thumb', 33, 33, true); // finish tile thumb
+  
 	// collections
   add_image_size('portfolio-large', 910, 385, true ); // TODO: check if needed
   add_image_size('portfolio-small', 130, 160, true ); // TODO: check if needed
   add_image_size('portfolio-slideshow', 700, 470 ); // TODO: remove
-	
-	// TODO:
-	add_image_size('product-thumb', 256, 170, true);
 	
 	// product detail page :: gallery
   add_image_size('viewer-large', 873, 471 );

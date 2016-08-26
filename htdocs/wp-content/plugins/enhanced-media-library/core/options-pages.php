@@ -467,7 +467,13 @@ if ( ! function_exists( 'wpuxss_eml_mimetype_options_page_scripts' ) ) {
         );
 
         $l10n_data = array(
-            'mime_deletion_confirm' => __( 'Warning! All your custom MIME Types will be deleted by this operation.', 'enhanced-media-library' ),
+            'mime_restoring_confirm_title' => __( 'Restore WordPress default MIME Types', 'enhanced-media-library' ),
+            'mime_restoring_confirm_text' => __( 'Warning! All your custom MIME Types will be deleted by this operation.', 'enhanced-media-library' ),
+            'mime_restoring_yes' => __( 'Restore Defaults', 'enhanced-media-library' ),
+            'in_progress_restoring_text' => __( 'Restoring...', 'enhanced-media-library' ),
+
+            'cancel' => __( 'Cancel', 'enhanced-media-library' ),
+
             'mime_error_empty_fields' => __( 'Please fill into all fields.', 'enhanced-media-library' ),
             'mime_error_duplicate' => __( 'Duplicate extensions or MIME types. Please chose other one.', 'enhanced-media-library' )
         );
@@ -1463,6 +1469,8 @@ if ( ! function_exists( 'wpuxss_eml_print_mimetypes_options' ) ) {
 
                             <?php settings_fields( 'mime-types' ); ?>
 
+                            <?php wpuxss_eml_print_mimetypes_buttons(); ?>
+
                             <table class="wpuxss-eml-mime-type-list wp-list-table widefat" cellspacing="0">
                                 <thead>
                                 <tr>
@@ -1532,9 +1540,7 @@ if ( ! function_exists( 'wpuxss_eml_print_mimetypes_options' ) ) {
                                 </tfoot>
                             </table>
 
-                            <?php submit_button(__('Restore WordPress default MIME Types','enhanced-media-library'),'secondary','eml-restore-mime-types-settings'); ?>
-
-                            <?php submit_button( __( 'Save Changes', 'enhanced-media-library' ), 'primary', 'eml-save-mime-types-settings' ); ?>
+                            <?php wpuxss_eml_print_mimetypes_buttons(); ?>
 
                         </form>
 
@@ -1545,6 +1551,29 @@ if ( ! function_exists( 'wpuxss_eml_print_mimetypes_options' ) ) {
             </div>
 
         </div>
+
+        <?php
+    }
+}
+
+
+
+/**
+ *  wpuxss_eml_print_mimetypes_buttons
+ *
+ *  @since    2.3.1
+ *  @created  01/08/16
+ */
+
+if ( ! function_exists( 'wpuxss_eml_print_mimetypes_buttons' ) ) {
+
+    function wpuxss_eml_print_mimetypes_buttons() { ?>
+
+        <p class="submit">
+            <?php submit_button( __( 'Save Changes', 'enhanced-media-library' ), 'primary', 'eml-save-mime-types-settings', false ); ?>
+
+            <input type="button" name="eml-restore-mime-types-settings" id="eml-restore-mime-types-settings" class="button" value="<?php _e('Restore WordPress default MIME Types','enhanced-media-library'); ?>">
+        </p>
 
         <?php
     }

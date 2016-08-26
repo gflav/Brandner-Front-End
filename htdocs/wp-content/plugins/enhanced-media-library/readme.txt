@@ -2,8 +2,8 @@
 Contributors: webbistro
 Tags: media library, media category, media categories, media gallery, gallery shortcode, media tag, media tags, media taxonomy, media taxonomies, media uploader, mime type, mime, mime types, file types, media types, media filter, attachment, gallery, image, images, media, ux, user experience, wp-admin, admin, taxonomy, taxonomies
 Requires at least: 4.5
-Tested up to: 4.5.3
-Stable tag: 2.3
+Tested up to: 4.6
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,14 +76,16 @@ Assistance with translating is highly appreciated! If you'd like to be a transla
 = Compatibility with Other Plugins =
 
 * Advanced Custom Fields
-* Search & Filter
-* I Order Terms
 * WooCommerce
+* I Order Terms
+* Search & Filter
+* Document Gallery
 * Meta Slider
 * Jetpack Carousel
 * Jetpack Tiled Galleries
 * Simple Lightbox
 * Responsive Lightbox by dFactory
+
 
 Please let us know if you find any issue with the plugins from the list above or others.
 
@@ -107,8 +109,9 @@ Please notice that you use the Enhanced Media Library with other plugins that ad
 
 = Useful Links =
 
-* [Where to start? (Information is being updated)](http://wpuxsolutions.com/documents/enhanced-media-library/eml-where-to-start/)
-* [Enhanced Media Shortcode Possible Conflicts](http://www.wpuxsolutions.com/documents/enhanced-media-library/enhanced-media-shortcode-possible-conflicts/)
+* [Where to start? (Information is being updated)](https://wpuxsolutions.com/documents/enhanced-media-library/eml-where-to-start/)
+* [Enhanced Media Shortcode Possible Conflicts](https://www.wpuxsolutions.com/documents/enhanced-media-library/enhanced-media-shortcode-possible-conflicts/)
+* [FAQs](https://www.wpuxsolutions.com/documents/enhanced-media-library/faqs/)
 
 
 
@@ -126,51 +129,7 @@ Please notice that you use the Enhanced Media Library with other plugins that ad
 
 == Frequently Asked Questions ==
 
-= Why my custom media taxonomy's page is 404? =
-
-Try to just re-save permalinks settings. Go to `Settings > Permalinks` and push "Save Changes" button.
-
-= Why Media Popup of some theme/plugin does not show taxonomy filters? =
-
-By default EML adds its filters to any media popup that already contains native WordPress filters. If a third-party plugin or theme supports native WordPress filters, EML will enhance them.
-
-If a third-party plugin or theme does not support WordPress native filters, but you believe that you need them, try "Force filters" option (`Settings > Media > Taxonomies > Options`). It allows forcing media filters for ANY media popup regardless of what was intended by its creator.
-
-= How to show images per media category on a webpage? =
-
-Since EML 2.1 you can use gallery shortcode with taxonomy parameters like this: `[gallery media_category="5" category="2" limit="10" monthnum="12" year="2015" orderby="title" order="DESC"]` to show filter-based gallery on the front-end. The feature should be activated on `Settings > Media > Media Library > Media Shortcodes`.
-
-Also, you can use WP_Query ([example of the code](http://wordpress.org/support/topic/php-displaying-an-array-of-images-per-category-or-categories)).
-
-= Drag and Drop re-order does not work for media library =
-
-First, please make sure that you chose "Custom Order" for "Order media items by" on `Settings > Media > Media Library > Media Items Order`.
-
-If you use Chrome on Windows, there can be an unexplored issue with it. See core tickets [#22607](https://core.trac.wordpress.org/ticket/22607), [#29606](https://core.trac.wordpress.org/ticket/29606), [#31652](https://core.trac.wordpress.org/ticket/31652). Feel free to contribute your issue details.
-
-In case you use Chrome on a touch screen laptop try to fix the issue as described [here](https://github.com/dbushell/Nestable/issues/92) or use other browser to re-order with drag and drop.
-
-= My gallery behavior is strange | Wrong or none media items displayed | Ligtbox/carousel/slideshow/mosaic looks broken =
-
-The plugin enhances WordPress gallery shortcode in most gentle manner possible. Since v2.1.5 the mechanism of the enhancement is dramatically improved to avoid possible conflicts. In most cases Enhanced Media Library is compatible with any plugin that changes *native* WP gallery template in order to provide lightbox, carousel, slideshow, grid/mosaic functionality.
-
-That said, other plugins might override WP gallery attributes or database query for media items in a way that would prevent Enhanced Media Library from displaying correct set of media items for gallery.
-
-If you find a possible conflict and prefer third-party features to taxonomy-based gallery of the plugin, please deactivate the feature (unset "Enhanced media shortcodes" option on `Settings > Media > Media Library > Media Shortcodes`) and let us know about the issue. We would like to find a solution!
-
-If you are a plugin/theme developer please read [Enhanced Media Shortcode Possible Conflicts](https://www.wpuxsolutions.com/documents/enhanced-media-library/enhanced-media-shortcode-possible-conflicts/)
-
-= Incorrect MIME type in a link inserted to a post / page =
-
-Most likely your server is configured improperly to handle this MIME type. Try to add `AddType MIME_TYPE EXTENSION` line to your .htaccess file (learn more about [.htaccess](http://www.htaccess-guide.com/) and  [AddType](http://httpd.apache.org/docs/2.0/mod/mod_mime.html#addtype)). For example, if your wrongly treated file is .mobi, then the line should be `AddType application/x-mobipocket-ebook .mobi`. But better contact your hosting provider with the description of the problem.
-
-= I get "Something went wrong" error when bulk-editing in PRO =
-
-Your server can simply not have enough time when processing a lot of media items. Increase `max_execution_time` to 300 (5 minutes) and try again. Increasing memory_limit could help as well.
-
-= Will I lose media categories I’ve created if I upgrade from free to PRO? =
-
-No, all your data will remain intact. Your created media categories and their ties with your images are stored in the database. When you deactivate and delete the free version and then upload and activate the PRO one nothing happens to the database.
+> [FAQs](https://www.wpuxsolutions.com/documents/enhanced-media-library/faqs/) | [Documentation](https://www.wpuxsolutions.com/documents/enhanced-media-library/)
 
 
 
@@ -202,6 +161,18 @@ No, all your data will remain intact. Your created media categories and their ti
 
 == Changelog ==
 
+= 2.3.1 =
+*Release Date - August 9, 2016*
+
+= Bugfixes =
+* MIME Type saving/restoring bug fixed: Settings > Media > MIME Types (tab)
+* Few minor bugs fixed
+
+= Compatibility =
+* WordPress 4.6 compatibility ensured
+
+
+&nbsp;
 = 2.3 =
 *Release Date - June 27, 2016*
 
@@ -244,7 +215,7 @@ No, all your data will remain intact. Your created media categories and their ti
 * Better CSS for media library grid mode, addressing some minor issues as well
 
 = Compatibility =
-* Wordpress 4.5 compatibility ensured
+* WordPress 4.5 compatibility ensured
 
 
 &nbsp;

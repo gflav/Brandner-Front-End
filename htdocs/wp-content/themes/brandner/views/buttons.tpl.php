@@ -7,7 +7,7 @@
   <?php $product = get_field('product', $post->ID); ?>
     <?php if(!empty($product)): ?>
     <?php $product = $product[0]; ?>
-      <a class="btn btn-buy-now" href="#" data-product-id="<?php echo $product->ID; ?>">Purchase</a>
+      <a class="btn btn-buy-now" href="#" data-product-id="<?php echo $product->ID; ?>" data-checkout-url="<?php echo tbo_get_checkout_url(); ?>">Purchase</a>
       <a class="btn btn-cart-add" href="#" data-product-id="<?php echo $product->ID; ?>">Add to Cart</a>
     <?php else: ?>
       <a class="btn btn-quote" href="#" data-product-id="<?php echo $post->ID; ?>">Get a Quote</a>

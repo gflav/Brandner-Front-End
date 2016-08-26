@@ -58,6 +58,10 @@
 	</footer>
 </div>
 
+<div class="hidden quote-form-hidden">
+  <?php gravity_form($form_id=3, $display_title=FALSE, $display_description=FALSE, $display_inactive=FALSE, $field_values=NULL, $ajax=TRUE, $tabindex=0, $echo=TRUE); ?>
+</div>
+
 <?php echo tbo()->view->load('handlebarsjs/templates'); ?>
 <?php wp_footer(); ?>
 </body>

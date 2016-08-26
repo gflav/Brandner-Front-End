@@ -3,8 +3,8 @@ Contributors: hearken
 Donate link: https://potentplugins.com/donate/?utm_source=replace-image&utm_medium=link&utm_campaign=wp-plugin-readme-donate-link
 Tags: replace, overwrite, image, images, media, attachment, attachments
 Requires at least: 3.5
-Tested up to: 4.5.3
-Stable tag: 1.1.3
+Tested up to: 4.6
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

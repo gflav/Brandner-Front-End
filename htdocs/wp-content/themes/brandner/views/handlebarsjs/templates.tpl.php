@@ -47,36 +47,41 @@
   <span class="cart-items">{{count}}</span>
 </script>
 
+<script id="template-quote-msg-default" type="text/x-handlebars-template">
+  Hi I'd like a quote on {{{product}}}
+</script>
+
 <script id="template-get-quote-form" type="text/x-handlebars-template">
   <div class="row">
 
     <div class="col-sm-12 col-lg-7">
       <h1>Get A Quote</h1>
-      
-      <form>
+      <form id="form-quote" method="post" action="">
+      <textarea name="message" class="hidden"></textarea>
   
         <div class="input-wrapper">
           <label>YOUR NAME</label>
-          <input type="text" placeholder="YOUR NAME">
+          <input name="name" type="text" placeholder="YOUR NAME">
         </div>
   
         <div class="input-wrapper">
           <label>YOUR EMAIL</label>
-          <input type="text" placeholder="YOUR EMAIL">
+          <input name="email" type="text" placeholder="YOUR EMAIL">
         </div>
   
         <div class="input-wrapper">
           <label>YOUR NUMBER(OPTIONAL)</label>
-          <input type="text" placeholder="YOUR NUMBER(OPTIONAL)">
+          <input name="phone" type="text" placeholder="YOUR NUMBER(OPTIONAL)">
         </div>
   
         <label>MESSAGE</label>
-        <textarea>
-        </textarea>
+        <div class="textarea" data-name="message"></div>
+        
         <div class="btn-group">
           <a class="btn btn-submit">Send Qoute Request</a>
-          <a class="btn btn-continue-shopping">Save & continue shopping</a>
+          <a class="btn btn-save-continue">Save & continue shopping</a>
         </div>
+        
       <form>
     </div>
   

@@ -3,7 +3,7 @@
 Plugin Name: Disable Comments
 Plugin URI: http://wordpress.org/extend/plugins/disable-comments/
 Description: Allows administrators to globally disable comments on their site. Comments can be disabled according to post type.
-Version: 1.5
+Version: 1.5.1
 Author: Samir Shah
 Author URI: http://rayofsolaris.net/
 License: GPL2
@@ -52,7 +52,7 @@ class Disable_Comments {
 	}
 
 	private function check_compatibility() {
-		if ( version_compare( $GLOBALS['wp_version'], '3.6', '<' ) ) {
+		if ( version_compare( $GLOBALS['wp_version'], '3.7', '<' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			deactivate_plugins( __FILE__ );
 			if ( isset( $_GET['action'] ) && ( $_GET['action'] == 'activate' || $_GET['action'] == 'error_scrape' ) ) {
@@ -151,6 +151,7 @@ class Disable_Comments {
 					remove_post_type_support( $type, 'trackbacks' );
 				}
 			}
+			add_filter( 'comments_array', array( $this, 'filter_existing_comments' ), 20, 2 );
 			add_filter( 'comments_open', array( $this, 'filter_comment_status' ), 20, 2 );
 			add_filter( 'pings_open', array( $this, 'filter_comment_status' ), 20, 2 );
 		}
@@ -193,6 +194,7 @@ class Disable_Comments {
 
 			if( $this->options['remove_everywhere'] ) {
 				add_filter( 'feed_links_show_comments_feed', '__return_false' );
+				add_action( 'wp_footer', array( $this, 'hide_meta_widget_link' ) );
 			}
 		}
 	}
@@ -334,6 +336,17 @@ jQuery(document).ready(function($){
 		else {
 			echo '<script> jQuery(function($){ $("#dashboard_right_now .comment-count, #latest-comments").hide(); }); </script>';
 		}
+	}
+
+	public function hide_meta_widget_link(){
+		if ( is_active_widget( false, false, 'meta', true ) && wp_script_is( 'jquery', 'enqueued' ) ) {
+			echo '<script> jQuery(function($){ $(".widget_meta a[href=\'' . esc_url( get_bloginfo( 'comments_rss2_url' ) ) . '\']").parent().remove(); }); </script>';
+		}
+	}
+
+	public function filter_existing_comments($comments, $post_id) {
+		$post = get_post( $post_id );
+		return ( $this->options['remove_everywhere'] || $this->is_post_type_disabled( $post->post_type ) ) ? array() : $comments;
 	}
 
 	public function filter_comment_status( $open, $post_id ) {

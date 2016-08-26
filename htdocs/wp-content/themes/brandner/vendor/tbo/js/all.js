@@ -458,9 +458,9 @@ window.brandnerdesign = brandnerdesign;
     source: null,
     template: null,
     
+    // TODO: phase out instance because array stores the object
     instance: null, // current instance
-    instances: {},
-    queue: [],
+    instances: [],
     
     init: function() {
       this.setup();
@@ -481,24 +481,15 @@ window.brandnerdesign = brandnerdesign;
       // close most recent modal
       $(document).keyup(function($evt) {
         if($evt.keyCode == brandnerdesign.KEYCODE_ESC) {
-          if($modal.queue.length > 0) {
-            var $instance = $modal.queue.pop();
-            $instance.modal('hide').trigger('modal.close');
-            $modal.queue.push($instance); // TODO:
-            // TODO: make sure bs.close is triggered
-          }
+          $modal.close();
         }
       });
       
-      // outside of modal click to close
-      // TODO: 
-      //$(document).on('click', '.modal-dialog', function($evt) {
-        //$evt.preventDefault();
-        //$modal.close();
-      //});
+      // NOTE: need to use default click outside to close
+      //       putting your own doesn't work
       
       // generic way to trigger a modal
-      $(document).on('click', 'li.trigger-modal a,a.trigger-modal', function($evt) {
+      $(document).on('click', 'li.trigger-modal a,a.trigger-modal,.terms_chkbox', function($evt) {
         $evt.preventDefault();
         var $this = $(this);
         var $modal_name = $.md5($this.attr('href'));
@@ -527,22 +518,40 @@ window.brandnerdesign = brandnerdesign;
     },
 
     addInstance: function($name, $instance) {
-      this.instances[$name] = $instance; // TODO: use queue
-      this.queue.push($instance);
+      this.instances.push({
+        name: $name,
+        instance: $instance
+      });
+      return this;
+    },
+    
+    exists: function($name) {
+      return (this.getInstance($name) !== false);
     },
     
     getInstance: function($name) {
       if ($name) {
-        return this.instances[$name];
+        var $instances = $.grep(this.instances, function($inst) {
+          return $inst.name === $name;
+        });
+        return $instances.length > 0 ? $instances.pop() : false;
       }
       return this.instance;
     },
-
-
-    exists: function($name) {
-      return this.instances && this.instances[$name];
-    },
     
+    popInstance: function($name) {
+      var $instance = null;
+      this.instances = $.grep(this.instances, function($inst) {
+        if($name === $inst.name) {
+          $instance = $inst.instance;
+          return false;
+        } else {
+          return true;
+        }
+      });
+      return $instance;
+    },
+
     open: function($name, $o) {
 
       var $deferred = $.Deferred();
@@ -583,10 +592,10 @@ window.brandnerdesign = brandnerdesign;
             var $content = $('#site-content', $html);
             if($content.length > 0) {
               // remove #site-content
-              $('.modal-inner', this.instance).html($content.html());
+              $('.modal-inner', $modal.instance).html($content.html());
             }
             if($options.footer) {
-              $('.modal-inner', this.instance).append($options.footer);
+              $('.modal-inner', $modal.instance).append($options.footer);
             }
             $modal.instance.modal('show');
             $deferred.resolve();
@@ -605,7 +614,8 @@ window.brandnerdesign = brandnerdesign;
         
         // reopen
         
-        this.getInstance($name).modal('show');
+        this.instance = this.getInstance($name).instance;
+        this.instance.modal('show');
         $deferred.resolve();
         
       }
@@ -615,19 +625,26 @@ window.brandnerdesign = brandnerdesign;
     },
     
     close: function($name) {
+      var $instance = null;
       if ($name && this.exists($name)) {
-        this.getInstance($name).modal('hide').trigger('modal.close');
+        $instance = this.getInstance($name);
       } else {
         // close last instance
-        this.getInstance().modal('hide').trigger('modal.close');
+        $instance = this.getInstance();
       }
+      if($instance) {
+        $instance.instance.modal('hide').trigger('modal.close', [$instance.name, $instance.instance]);
+      }
+      return this;
     },
     
     // remove from $modal instance list, and dom
     remove: function($name) {
       if(this.exists($name)) {
-        this.getInstance($name).remove();
-        delete this.instances[$name];
+        var $instance = this.popInstance($name);
+        if($instance) {
+          $instance.remove();  
+        }
       }
       return this;
     }
@@ -673,6 +690,12 @@ window.brandnerdesign = brandnerdesign;
     
     listen: function() {
       
+      $(document).on('modal.close', function($evt, $name) {
+        if($name == 'gallery') {
+          $modal.remove('gallery');
+        }
+      });
+      
       $('.trigger-modal-video').click(function($evt) {
         $evt.preventDefault();
         var $this = $(this);
@@ -681,10 +704,6 @@ window.brandnerdesign = brandnerdesign;
           embed: $tbo.convertMedia($this.attr('data-video'), {autoplay: 1})
         }];
         $modal.open('gallery', {html: $controller.template({items: $items, count: $items.length})});
-        // get rid of the modal from the dom
-        $modal.getInstance('gallery').on('modal.close', function() {
-          $modal.remove('gallery');
-        });
       });
       
       $('.btn-gallery,.trigger-gallery').click(function($evt) {
@@ -698,17 +717,13 @@ window.brandnerdesign = brandnerdesign;
           var $modal_name = 'gallery';
           var $items = $controller.parseGalleryItems($response);
           
-          console.log('gallery', $title, $items);
-          
           $modal.open($modal_name, {html: $controller.template({title: $title, items: $items, count: $items.length})});
           
-          // TODO: get the gallery to work better, stupid image sizes and shiz.
-
-          $('.modal-gallery', $modal.getInstance($modal_name)).css('visibility', 'hidden');
+          $('.modal-gallery', $modal.getInstance($modal_name).instance).css('visibility', 'hidden');
           
           setTimeout(function(){
-
-            var $gallery = $('.modal-gallery', $modal.getInstance($modal_name)).slick({
+            
+            var $gallery = $('.modal-gallery', $modal.getInstance($modal_name).instance).slick({
               infinite: true,
               autoplay:false,
               autoplaySpeed: brandnerdesign.setting.sliderSpeed,
@@ -725,15 +740,21 @@ window.brandnerdesign = brandnerdesign;
             
             $gallery.css('visibility', 'visible');
 
+            // update index number
             $gallery.on('afterChange', function($slick, $currentSlide) {
               var $idx = $currentSlide.currentSlide + 1;
               $('.modal-instance-gallery .current-item').text($idx);
             });
-
-            // get rid of the modal from the dom
-            $modal.getInstance($modal_name).on('modal.close', function() {
-              $modal.remove('gallery');
+            
+            // resize width
+            /*
+            $gallery.on('afterChange', function() {
+              var $image = $('.modal-instance-gallery .slick-active img');
+              $('.modal-instance-gallery .modal-gallery').css('width', $image.width()+'px');
+              var $outerWidth = $image.width()+60;
+              $('.modal-instance-gallery .modal-content').css('width', $outerWidth+'px');
             });
+            */
 
           }, 500);
 
@@ -951,10 +972,13 @@ window.brandnerdesign = brandnerdesign;
       // buy now
       $('.btn-buy-now').click(function($evt) {
         $evt.preventDefault();
-        var $pid = $(this).attr('data-product-id');
-        $modal.open('cart', {url: '/checkout/?add-to-cart='+$pid, selector: '#site-content .woocommerce'});
-        $modal.getInstance('cart').on('modal.close', function() {
-          $modal.remove('cart');
+        var $this = $(this);
+        var $pid = $this.attr('data-product-id');
+        var $checkout_url = $this.attr('data-checkout-url');
+        // add to cart
+        $.post('/cart/?add-to-cart='+$pid).done(function() {
+          // go to checkout
+          window.location.href = $checkout_url;
         });
       });
       
@@ -963,9 +987,6 @@ window.brandnerdesign = brandnerdesign;
         $evt.preventDefault();
         var $pid = $(this).attr('data-product-id');
         $modal.open('cart', {url: '/cart/?add-to-cart='+$pid, selector: '#site-content .woocommerce', cache:false});
-        $modal.getInstance('cart').on('modal.close', function() {
-          $modal.remove('cart');
-        });
       });
       
       // view cart
@@ -975,8 +996,16 @@ window.brandnerdesign = brandnerdesign;
       });
       
       $(document).on('click', '.btn-continue-shopping', function($evt) {
-        $evt.preventDefault();
-        $modal.close('cart');
+        if($(this).closest('.modal').length > 0) {
+          $evt.preventDefault();
+          $modal.close('cart').remove('cart');
+        }
+      });
+      
+      $(document).on('modal.close', function($evt, $name) {
+        if($name == 'cart') {
+          $modal.remove('cart');
+        }
       });
       
     },
@@ -1117,30 +1146,55 @@ window.brandnerdesign = brandnerdesign;
   
   var $controller = {
     
+    selector: '#form-quote',
+    el: null,
+    
+    trigger_selector: '.btn-quote',
+    trigger: null,
+    
     source: null,
     template: null,
     
     init: function() {
       
-      this.setup();
-      this.listen();
+      this.trigger = $(this.trigger_selector);
+      if(this.trigger.length > 0) {
+      
+        this.setup();
+        this.listen();
+        
+      }
       
     },
     
     setup: function() {
-      
+      this.normalize();
       this.templates();
+    },
+    
+    normalize: function() {
+      
+      // for older devices
+      if (typeof String.prototype.endsWith !== 'function') {
+        String.prototype.endsWith = function(suffix) {
+          return this.indexOf(suffix, this.length - suffix.length) !== -1;
+        };
+      }
       
     },
     
     templates: function() {
+      // form
       this.source = $('#template-get-quote-form').html();
       this.template = Handlebars.compile(this.source);
+      // msg
+      this.msg = Handlebars.compile($('#template-quote-msg-default').html());
     },
     
     listen: function() {
       
-      $('.btn-quote').click(function($evt) {
+      // trigger the quote form
+      this.trigger.click(function($evt) {
         
         $evt.preventDefault();
         
@@ -1151,11 +1205,129 @@ window.brandnerdesign = brandnerdesign;
           var $title = $('h1').text();
           var $body = $('.post-content').html();
           var $featured_image = $('.product-image:first-child').html();
-          $modal.open('quote', {html: $controller.template({title: $title, body: $body, featured_image: $featured_image})});
+          $modal.open('quote', {html: $controller.template({title: $title, body: $body, featured_image: $featured_image})}).done(function() {
+            $controller.unpackForm();
+            var $item = '<strong>' + $title + '</strong>';
+            var $message = $($controller.wrapSelector('.textarea'));
+            if($controller.get('message').val() === "") {
+              // first timer
+              $message.html($controller.msg({product: $item}));
+            } else if($controller.get('message').val().indexOf($title) === -1) {
+              // insert & update
+              $message.html($controller.parseMsg($controller.get('message').val().trim(), $item));
+            } else {
+              // existing
+              $message.html($controller.get('message').val()); 
+            }
+            $message.attr('contenteditable', true);
+          });
         }
         
       });
       
+      // sync textarea
+      // NOTE: do when form saves, or closes
+      
+      // save button
+      $(document).on('click', this.wrapSelector('.btn-submit'), function($evt) {
+        $evt.preventDefault();
+        $($controller.selector).submit();
+      });
+      
+      // save & continue
+      $(document).on('click', this.wrapSelector('.btn-save-continue'), function($evt) {
+        $evt.preventDefault();
+        $controller.syncEditable().storeForm();
+        $modal.close('quote');
+      });
+
+      // form submit to database
+      $(document).on('submit', this.selector, function($evt) {
+        $evt.preventDefault();
+        // click & in case enter was hit
+        $controller.syncEditable();
+        // simple validate
+        if($controller.get('name').val() === "" || $controller.get('email').val() === "") {
+          return;
+        }
+        // ajax post
+        $controller.submit();
+        // clear the storage
+        $controller.clearForm();
+        // close modal
+        $modal.close('quote').remove('quote');
+      });
+      
+    },
+    
+    submit: function() {
+      
+      var $gravity = $('.quote-form-hidden form');
+      
+      // map fields
+      $('[name="input_1"]', $gravity).val($controller.get('name').val());
+      $('[name="input_2"]', $gravity).val($controller.get('email').val());
+      $('[name="input_3"]', $gravity).val($controller.get('phone').val());
+      $('[name="input_4"]', $gravity).val($controller.get('message').val()); // TODO: strip html
+      
+      // submit
+      $gravity.submit();
+      
+    },
+    
+    // helper functions
+    
+    parseMsg: function($msg, $item) {
+      // check for period within tags
+      if($msg.indexOf('.</strong>') !== -1) {
+        $msg =$msg.replace('.</strong>', '</strong>.');
+      }
+      if($msg.endsWith('.')) {
+        return $msg + " I'd also like a quote on " + $item + '.';
+      } else {
+        return $msg + ', ' + $item;
+      }
+    },
+    
+    syncEditable: function() {
+      $(this.wrapSelector('.textarea')).each(function() {
+        var $this = $(this);
+        $controller.get($this.attr('data-name')).val($this.html());
+      });
+      return this;
+    },
+    
+    unpackForm: function() {
+      var $data = $.localStorage.get(this.selector);
+      if($data && $.type($data) == 'array' && $data.length > 0) {
+        $.each($data, function($idx, $field) {
+          $controller.get($field.name).val($field.value);
+        });
+      }
+    },
+    
+    storeForm: function() {
+      var $data = $(this.selector).serializeArray();
+      $.localStorage.set(this.selector, $data);
+      return this;
+    },
+    
+    clearForm: function() {
+      $.localStorage.remove(this.selector);
+      return this;
+    },
+    
+    // get the html field
+    get: function($name) {
+      return $(this.wrapSelector('[name="'+$name+'"]'));
+    },
+    
+    // prefixes the parent selector
+    wrapSelector: function($selector) {
+      if($selector) {
+        return this.selector + ' ' + $selector;  
+      }
+      return this.selector;
     }
     
   };
@@ -1248,7 +1420,7 @@ window.brandnerdesign = brandnerdesign;
         var $this = $(this);
         var $html = $('.product-finish-tooltip', $this).html();
         $this.tooltip({
-          placement: 'top',
+          placement: 'auto',
           html: true,
           title: $html,
           trigger: 'manual',
@@ -1258,15 +1430,12 @@ window.brandnerdesign = brandnerdesign;
       
     },
     
-    // TODO:
     templates: function() {
       
     },
     
     listen: function() {
       
-      // TODO: close on ipad
-
       $('.product-finish', this.el).click(function($evt) {
         $evt.preventDefault();
         var $this = $(this);
@@ -1276,13 +1445,16 @@ window.brandnerdesign = brandnerdesign;
       $('.product-finish', this.el).hover(
         function hoverOver() {
           var $this = $(this);
+          $('.product-finish').not($this).tooltip('hide');
           $this.tooltip('show');
         },
         function hoverOut() {
           var $this = $(this);
-          //$tbo.once(function() {
-            $this.tooltip('hide');
-          //}, 'product-finish-tooltip', 40000);
+          $tbo.once(function() {
+            if(!$('.product-finish:hover').length) {
+              $this.tooltip('hide');  
+            }
+          }, 'product-finish-tooltip', 1000);
         }
       );
       
@@ -1548,3 +1720,132 @@ window.brandnerdesign = brandnerdesign;
 	};
 
 } )( jQuery, window );
+
+(function($) {
+  
+  $(document).ready(function() {
+    $controller.init();
+  });
+  
+  var $controller = {
+    
+    selector: '.form-payment',
+    el: null,
+    
+    init: function() {
+      
+      this.el = $(this.selector);
+      if(this.el.length > 0) {
+        
+        this.listen();
+        
+      }
+      
+    },
+    
+    listen: function() {
+      
+      $(this.el).submit(function($evt) {
+        
+        var $account_number = $('[name="account_number"]', this.el);
+        var $amount = $('[name="amount"]', this.el);
+        
+        // simple validation
+        if(!$account_number.val() || $amount.val() <= 0) {
+          $evt.preventDefault();
+        } else {
+          // valid
+          
+          var $item_name = $('[name="item_name"]', this.el);
+          $item_name.val($item_name.val().replace('[account_number]', $account_number.val()));
+          
+        }
+        
+      });
+      
+    }
+    
+  };
+  
+  window.$payment = $controller; // NOTE: just in case it's needed outside of scope
+  
+})(jQuery);
+(function($) {
+
+  $(document).ready(function() {
+    $controller.init();
+  });
+  
+  var $controller = {
+    
+    init: function() {
+      setTimeout(function() {
+        $controller.listen();  
+      });
+    },
+    
+    listen: function() {
+      
+      $(document).on('click', '.btn', function() {
+        var $this = $(this);
+        var $label = $controller.findLabel($this);
+        $controller.track({eventAction: $this.text(), eventLabel: $label});
+      });
+      
+      $(document).on('click', 'a[href^="tel:"]', function() {
+         var $this = $(this);
+         $controller.track({eventAction: 'Phone Call', eventLabel: $this.text()});
+      });
+
+      $(document).on('click', 'a[href^="mailto:"]', function() {
+         var $this = $(this);
+         $controller.track({eventAction: 'Mail', eventLabel: $this.text()});
+      });
+      
+    },
+    
+    // helper functions
+    
+    track: function($o) {
+      try {
+        var $options = $.extend({}, {
+            hitType: 'event',
+            eventCategory: 'Click',
+            eventAction: '',
+            eventLabel: ''
+        }, $o);
+        if($.type(window.ga) == 'function') {
+          ga('send', $options);
+        }
+        this.log($options);
+      } catch($e) {
+        this.log($e);
+      }
+    },
+    
+    log: function($msg) {
+      if(console) {
+        console.log($msg);
+      }
+    },
+    
+    findLabel: function($this) {
+      
+      var $test = $this.closest('.project-featured');
+      
+      // project
+      if($test.length > 0) {
+        return $test.find('h2').text();
+      }
+      
+      // product
+      $test = $this.closest('.product-detail-container');
+      if($test.length > 0) {
+        return $('h1').text();
+      }
+      
+    }
+    
+  };
+  
+})(jQuery);

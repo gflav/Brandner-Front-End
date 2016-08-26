@@ -43,6 +43,8 @@ window.eml = window.eml || { l10n: {} };
                 library.saveMenuOrder();
             }
 
+            $('.attachment-filters:has(option[value!="all"]:selected)').val( 'all' ).change();
+
             library.reset( library.models );
 
             selection.trigger( 'selection:unsingle', selection.model, selection );
@@ -51,16 +53,12 @@ window.eml = window.eml || { l10n: {} };
 
         uploading: function( attachment ) {
 
-    		var content = this.frame.content,
+            var content = this.frame.content,
                 selection = this.get( 'selection' );
 
 
-    		if ( 'upload' === content.mode() ) {
-    			this.frame.content.mode('browse');
-    		}
-
-            if ( wp.Uploader.queue.length == 1 ) {
-                $('.attachment-filters:has(option[value!="all"]:selected)').val( 'all' ).change();
+            if ( 'upload' === content.mode() ) {
+                this.frame.content.mode('browse');
             }
 
             if ( this.get( 'autoSelect' ) ) {
@@ -71,8 +69,8 @@ window.eml = window.eml || { l10n: {} };
                 selection.add( attachment );
                 selection.trigger( 'selection:unsingle', selection.model, selection );
                 selection.trigger( 'selection:single', selection.model, selection );
-    		}
-    	}
+            }
+        }
     });
 
 

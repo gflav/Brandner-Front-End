@@ -198,3 +198,11 @@ function tbo_get_api_route($post) {
   }
   return $base . '/' . $post->post_type . '/' . $post->ID;
 }
+
+function tbo_get_checkout_url() {
+  if(class_exists('AngellEYE_Gateway_Paypal')) {
+    return esc_url(add_query_arg('use_paypal_credit', 'true', add_query_arg('pp_action', 'expresscheckout', add_query_arg('wc-api', 'WC_Gateway_PayPal_Express_AngellEYE', home_url('/')))));
+  }
+  // default
+  return '/checkout/';
+}
