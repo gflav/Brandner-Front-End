@@ -1442,6 +1442,13 @@ a.page-numbers:not(.dots){cursor:pointer}
 .play-btn:after{content:"";width:45px;border:5px solid rgba(255,255,255,.5);-webkit-border-radius:50%;border-radius:50%;display:block;right:0;top:0;-webkit-transition:.3s;transition:.3s}
 .play-btn span{font-size:38px;display:inline-block;-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg);position:absolute;line-height:45px;right:3px}
 .hidden_label label,.validation_error,.validation_message{display:none}
+.brandner-loader{margin-left:auto;margin-right:auto;border:16px solid #f3f3f3;border-top:16px solid #3498db;-webkit-border-radius:50%;border-radius:50%;width:120px;height:120px;-webkit-animation:spin 2s linear infinite;animation:spin 2s linear infinite}
+@-webkit-keyframes spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}
+100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+}
+@keyframes spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}
+100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+}
 input{background-color:#454040;width:100%;color:#181818;border:none;padding:10px 15px;font-family:ProximaNova-Light;height:40px;font-size:18px;font-weight:400}
 ::-webkit-input-placeholder{color:#010101}
 :-moz-placeholder{color:#010101}
