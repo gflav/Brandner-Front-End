@@ -11,9 +11,11 @@ function tbo_scripts() {
   $baseUri = get_stylesheet_directory_uri() . '/vendor/tbo';
   
   // dependencies
-  wp_register_script( 'vc_grid-js-imagesloaded',
-    vc_asset_url( 'lib/bower/imagesloaded/imagesloaded.pkgd.min.js' )
-  );
+  if(function_exists('vc_asset_url')) {
+    wp_register_script( 'vc_grid-js-imagesloaded',
+      vc_asset_url( 'lib/bower/imagesloaded/imagesloaded.pkgd.min.js' )
+    );
+  }
   
   // css
   

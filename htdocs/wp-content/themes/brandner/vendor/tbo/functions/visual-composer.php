@@ -1,5 +1,10 @@
 <?php
 
+// check for visual composer being installed
+if(!function_exists('vc_map')) {
+  return;
+}
+
 // a simple promo image with caption & link
 vc_map( array(
    "name" => __("Promo Image"),

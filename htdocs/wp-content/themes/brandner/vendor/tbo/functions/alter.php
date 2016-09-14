@@ -10,7 +10,9 @@ function tbo_init() {
    * Don't brag.
    **/
   remove_action('wp_head', 'wp_generator');
-  remove_action('wp_head', array(visual_composer(), 'addMetaData'));
+  if(function_exists('visual_composer')) {
+    remove_action('wp_head', array(visual_composer(), 'addMetaData'));
+  }
 }
 
 // alter post query as needed
