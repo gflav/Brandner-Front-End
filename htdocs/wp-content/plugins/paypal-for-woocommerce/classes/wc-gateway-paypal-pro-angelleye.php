@@ -89,10 +89,13 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
         $this->debug = isset($this->settings['debug']) && $this->settings['debug'] == 'yes' ? true : false;
         $this->payment_action = isset($this->settings['payment_action']) ? $this->settings['payment_action'] : 'Sale';
         $this->send_items = isset($this->settings['send_items']) && $this->settings['send_items'] == 'no' ? false : true;
-        $this->enable_notifyurl = isset($this->settings['enable_notifyurl']) && $this->settings['enable_notifyurl'] == 'no' ? false : true;
+         $this->enable_notifyurl = $this->get_option('enable_notifyurl', 'no');
         $this->notifyurl = '';
-        if ($this->enable_notifyurl) {
-            $this->notifyurl = isset($this->settings['notifyurl']) ? str_replace('&amp;', '&', $this->settings['notifyurl']) : '';
+        if($this->enable_notifyurl == 'yes') {
+            $this->notifyurl = $this->get_option('notifyurl'); 
+            if( isset($this->notifyurl) && !empty($this->notifyurl)) {
+                $this->notifyurl =  str_replace('&amp;', '&', $this->notifyurl);
+            }
         }
         $this->enable_cardholder_first_last_name = isset($this->settings['enable_cardholder_first_last_name']) && $this->settings['enable_cardholder_first_last_name'] == 'yes' ? true : false;
         // 3DS
@@ -272,7 +275,7 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
             'payment_action' => array(
                 'title' => __('Payment Action', 'paypal-for-woocommerce'),
                 'label' => __('Whether to process as a Sale or Authorization.', 'paypal-for-woocommerce'),
-                'description' => __('Sale will capture the funds immediately when the order is placed.  Authorization will authorize the payment but will not capture the funds.  You would need to capture funds through your PayPal account when you are ready to deliver.'),
+                'description' => __('Sale will capture the funds immediately when the order is placed.  Authorization will authorize the payment but will not capture the funds.  You would need to capture funds from within the WooCommerce order when you are ready to deliver.'),
                 'type' => 'select',
                 'options' => array(
                     'Sale' => 'Sale',
@@ -844,9 +847,12 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
             'desc' => '',                            // Description of the order the customer is purchasing.  127 char max.
             'custom' => apply_filters( 'ae_ppddp_custom_parameter', $customer_note , $order ),                        // Free-form field for your own use.  256 char max.
             'invnum' => $invoice_number = $this->invoice_id_prefix . preg_replace("/[^a-zA-Z0-9]/", "", $order->id), // Your own invoice or tracking number
-            'notifyurl' => $this->notifyurl,                        // URL for receiving Instant Payment Notifications.  This overrides what your profile is set to use.
             'recurring' => ''                        // Flag to indicate a recurring transaction.  Value should be Y for recurring, or anything other than Y if it's not recurring.  To pass Y here, you must have an established billing agreement with the buyer.
         );
+        
+        if( isset($this->notifyurl) && !empty($this->notifyurl) ) {
+            $PaymentDetails['notifyurl'] = $this->notifyurl;
+        }
 
         $PaymentData = AngellEYE_Gateway_Paypal::calculate($order, $this->send_items);
         $OrderItems = array();
@@ -1002,6 +1008,9 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
             $cvv2_response_order_note .= $cvv2_response_code;
             $cvv2_response_order_note .= $cvv2_response_message != '' ? ' - ' . $cvv2_response_message : '';
             $order->add_order_note($cvv2_response_order_note);
+            
+            $is_sandbox = $this->testmode == 'yes' ? true : false;
+            update_post_meta($order->id, 'is_sandbox', $is_sandbox);
      
             // Payment complete
             if ($this->payment_action == "Sale") {
@@ -1202,12 +1211,12 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
     {
         if ($this->enable_cardholder_first_last_name && $current_id == $this->id) {
             $fields['card-cardholder-first'] = '<p class="form-row form-row-first">
-                    <label for="' . esc_attr($this->id) . '-card-cvc">' . __('Cardholder first name', 'paypal-for-woocommerce') . '</label>
-                    <input id="' . esc_attr($this->id) . '-card-cvc" class="input-text wc-credit-card-form-cardholder" type="text" autocomplete="off" placeholder="' . esc_attr__('First name', 'paypal-for-woocommerce') . '" name="' . $current_id . '-card-cardholder-first' . '" />
+                    <label for="' . esc_attr($this->id) . '-card-cvc">' . __('Cardholder First Name', 'paypal-for-woocommerce') . '</label>
+                    <input id="' . esc_attr($this->id) . '-card-cvc" class="input-text wc-credit-card-form-cardholder" type="text" autocomplete="off" placeholder="' . esc_attr__('First Name', 'paypal-for-woocommerce') . '" name="' . $current_id . '-card-cardholder-first' . '" />
             </p>';
             $fields['card-cardholder-last'] = '<p class="form-row form-row-last">
-                    <label for="' . esc_attr($this->id) . '-card-startdate">' . __('Cardholder last name', 'paypal-for-woocommerce') . '</label>
-                    <input id="' . esc_attr($this->id) . '-card-startdate" class="input-text wc-credit-card-form-cardholder" type="text" autocomplete="off" placeholder="' . __('Last name', 'paypal-for-woocommerce') . '" name="' . $current_id . '-card-cardholder-last' . '" />
+                    <label for="' . esc_attr($this->id) . '-card-startdate">' . __('Cardholder Last Name', 'paypal-for-woocommerce') . '</label>
+                    <input id="' . esc_attr($this->id) . '-card-startdate" class="input-text wc-credit-card-form-cardholder" type="text" autocomplete="off" placeholder="' . __('Last Name', 'paypal-for-woocommerce') . '" name="' . $current_id . '-card-cardholder-last' . '" />
             </p>';
 
             foreach ($fields as $field) {
@@ -1269,5 +1278,25 @@ class WC_Gateway_PayPal_Pro_AngellEYE extends WC_Payment_Gateway
         } else {
             return $default_fields;
         }
+    }
+    
+    public function get_transaction_url( $order ) {
+        $sandbox_transaction_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=%s';
+        $live_transaction_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_view-a-trans&id=%s';
+        $is_sandbox = get_post_meta($order->id, 'is_sandbox', true);
+        if ( $is_sandbox  == true ) {
+            $this->view_transaction_url = $sandbox_transaction_url;
+        } else {
+            if ( empty( $is_sandbox ) ) {
+                if (  $this->testmode == 'yes' ) {
+                    $this->view_transaction_url = $sandbox_transaction_url;
+                } else {
+                    $this->view_transaction_url = $live_transaction_url;
+                }
+            } else {
+                $this->view_transaction_url = $live_transaction_url;
+            }
+        }
+        return parent::get_transaction_url( $order );
     }
 }
