@@ -1,6 +1,9 @@
 <?php
   
+  $title = get_the_title($post->ID);
   $gallery = get_field('post_media', $post->ID);
+  
+  $slides = [];
   $thumbs = [];
   
   if(!empty($gallery)):
@@ -8,10 +11,14 @@
     foreach($gallery as $gallery):
       if(isset($gallery['bd_img_gal']) && count($gallery['bd_img_gal']) > 0):
         // image
-        $gallery['bd_img_gal'] = array_slice($gallery['bd_img_gal'], 0, 6);
         foreach($gallery['bd_img_gal'] as $item):
           if($image = wp_get_attachment_image( $item['ID'], 'viewer-large')) {
-            $thumbs[] = '<li><a href="#">' . wp_get_attachment_image($item['ID'], 'viewer-thumb') . '</a></li>';
+            list($url, $width, $height, $is_intermediate) = wp_get_attachment_image_src($item['ID'], 'viewer-large');
+            $thumbs[] = [
+              'url' => $url,
+              'width' => $width,
+              'height' => $height
+            ];
             echo '<div class="product-image">';
             echo $image;
             echo '</div>';
@@ -27,7 +34,11 @@
             $data = json_decode(file_get_contents("http://vimeo.com/api/v2/video/$vimeo_id.json"));
             $url = $data[0]->thumbnail_medium;
             
-            $thumbs[] = '<li><a href="#"><img src="' .$url. '" alt=""></a></li>';
+            $thumbs[] = [
+              'url' =>  $url,
+              'width' => NULL,
+              'height' => NULL,
+            ];
             
             echo '<div class="product-video product-image">';
             echo tbo()->shortcode('[vimeo]'.$item['vimeo_url'].'[/vimeo]');
@@ -41,7 +52,12 @@
   else:
     // featured image
     if($image = get_the_post_thumbnail($post->ID, 'viewer-large')) {
-      $thumbs[] = '<li><a href="#">' . wp_get_attachment_image($post->ID, 'viewer-thumb') . '</a></li>';
+      list($url, $width, $height, $is_intermediate) = wp_get_attachment_image_src($item['ID'], 'viewer-large');
+      $thumbs[] = [
+        'url' => $url,
+        'width' => $width,
+        'height' => $height
+      ];
       echo '<div class="product-image">';
       echo $image;
       echo '</div>';
@@ -52,15 +68,12 @@
 
   <div class="product-gallery-thumbs-container">
     <div class="row">
-      <div class="tbo-col-sm-6 tbo-col-md-3">
-        <div class="product-gallery-thumbs-container-headline">
-            <h1><?php echo $post->post_title; ?></h1>
-         </div>
-      </div>
-      <div class="tbo-col-sm-6 tbo-col-md-9">
+      <div class="col-sm-12">
         <?php if(!empty($thumbs)): ?>
         <ul class="product-thumbs">
-        <?php echo join('', $thumbs); ?>
+        <?php foreach($thumbs as $thumb): ?>
+          <li><a href="#"><img src="<?php echo $thumb['url']; ?>" alt=""></a></li>
+        <?php endforeach; ?>
         </ul>
         <?php endif; ?>
       </div>

@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 add_filter( 'shortcode_atts_gallery', 'wpuxss_eml_shortcode_atts', 10, 3 );
 add_filter( 'shortcode_atts_playlist', 'wpuxss_eml_shortcode_atts', 10, 3 );
+add_filter( 'shortcode_atts_slideshow', 'wpuxss_eml_shortcode_atts', 10, 3 );
 
 
 
@@ -105,7 +106,7 @@ if ( ! function_exists( 'wpuxss_eml_shortcode_atts' ) ) {
         $ids = get_posts( $query );
 
         if ( ! empty( $ids ) ) {
-            $out['include'] = implode( ',', $ids );
+            $out['ids'] = $out['include'] = implode( ',', $ids );
         }
 
         return $out;

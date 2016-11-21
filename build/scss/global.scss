@@ -38,7 +38,7 @@ body{
   
 	@media #{$lg} {
 		margin-top: 0;
-		padding: 30px;
+		padding: $grid-spacing;
     padding-top:0;
 	}
 

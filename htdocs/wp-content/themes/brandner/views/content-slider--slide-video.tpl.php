@@ -1,4 +1,4 @@
-<li>
+<li class="slideshow--<?php echo $item->content_align; ?>">
   <?php if(!empty($item->video)): ?>
     <?php if(!empty($item->image)): ?>
       <div class="slide-image"><?php echo $item->image; ?></div>
@@ -14,6 +14,9 @@
     <div class="col-sm-12 slide-content">
       <?php if(!empty($item->heading)): ?>
       <h2><?php echo $item->heading; ?></h2>
+      <?php endif; ?>
+      <?php if(!empty($item->description)): ?>
+      <p><?php echo $item->description; ?></p>
       <?php endif; ?>
       <?php if(!empty($item->video)): ?>
         <div class="play-btn trigger-modal-video" data-video="<?php echo $item->video; ?>">Watch the Video<span class="icon icon-triangle icon-triangle-up"></span></div>

@@ -1,0 +1,39 @@
+
+.woocommerce-checkout, .woocommerce-cart, .has_paypal_express_checkout {
+  
+  .woocommerce {
+    
+    h2, h3 {
+      margin-top:25px;
+    }
+    
+    table {
+      
+      width:100%;
+      
+      tbody td {
+        padding:15px;
+      }
+      
+      tfoot th {
+        text-align:right;
+        padding-right:15px;
+      }
+      
+    }
+   
+    .trigger-modal-close {
+      display:none;
+    }
+    
+    .woocommerce-error {
+      color:red;
+    }
+    
+    .woocommerce-thankyou-order-received {
+      color:green;
+    }
+    
+  }
+  
+}

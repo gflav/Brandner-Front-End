@@ -79,7 +79,7 @@
         
         <div class="btn-group">
           <a class="btn btn-submit">Send Qoute Request</a>
-          <a class="btn btn-save-continue">Save & continue shopping</a>
+          <a class="btn btn-save-continue">Save & continue</a>
         </div>
         
       <form>

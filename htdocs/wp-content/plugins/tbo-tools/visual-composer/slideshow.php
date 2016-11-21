@@ -53,7 +53,7 @@ vc_map( array(
          "heading" => __("Content Alignment"),
          "param_name" => "content_align",
          "description" => __("Which side does the content display on?"),
-         "value" => ['left', 'center', 'right']
+         "value" => ['left', 'right']
       ),
       array(
          "type" => "textfield",
@@ -62,6 +62,13 @@ vc_map( array(
          "heading" => __("Heading"),
          "param_name" => "heading",
          "description" => __("The text below the image.")
+      ),
+      array(
+         "type" => "textfield",
+         "class" => "",
+         "heading" => __("Description"),
+         "param_name" => "description",
+         "description" => __("The body content for the slide.")
       ),
       array(
          "type" => "attach_image",
@@ -74,9 +81,16 @@ vc_map( array(
       array(
          "type" => "textfield",
          "class" => "",
+         "heading" => __("CTA Text"),
+         "param_name" => "cta_text",
+         "description" => __("The CTA text. Defaults to Learn more.")
+      ),
+      array(
+         "type" => "textfield",
+         "class" => "",
          "heading" => __("Link"),
          "param_name" => "link",
-         "description" => __("The URL the link goes to.")
+         "description" => __("CTA link URL.")
       ),
       array(
          "type" => "textfield",
@@ -96,7 +110,9 @@ if ( class_exists( 'WPBakeryShortCode' ) ) {
         extract(shortcode_atts(array(
             'content_align' => 'left',
             'heading' => '',
+            'description' => '',
             'image' => '',
+            'cta_text' => 'Learn more',
             'link' => '',
             'el_class' => '',
           ), $atts
@@ -105,8 +121,10 @@ if ( class_exists( 'WPBakeryShortCode' ) ) {
         $params = array(
           'item' => (object)array(
             'content_align' => $content_align,
+            'description' => $description,
             'image' => !empty($image) ? wp_get_attachment_image($image, $size='full') : '',
             'heading' => $heading,
+            'cta_text' => $cta_text,
             'link' => $link
           ),
         );
@@ -126,12 +144,28 @@ vc_map( array(
    "as_child" => array('only' => 'content_slider'),
    "params" => array(
       array(
+         "type" => "dropdown",
+         "holder" => 'div',
+         "class" => "",
+         "heading" => __("Content Alignment"),
+         "param_name" => "content_align",
+         "description" => __("Which side does the content display on?"),
+         "value" => ['left', 'right']
+      ),
+      array(
          "type" => "textfield",
          "holder" => 'div',
          "class" => "",
          "heading" => __("Heading"),
          "param_name" => "heading",
          "description" => __("The text below the image.")
+      ),
+      array(
+         "type" => "textfield",
+         "class" => "",
+         "heading" => __("Description"),
+         "param_name" => "description",
+         "description" => __("The body content for the slide.")
       ),
       array(
          "type" => "attach_image",
@@ -164,7 +198,9 @@ if ( class_exists( 'WPBakeryShortCode' ) ) {
       protected function content( $atts, $content = null ) {
         
         extract(shortcode_atts(array(
+            'content_align' => 'left',
             'heading' => '',
+            'description' => '',
             'image' => '',
             'video' => '',
             'el_class' => '',
@@ -174,7 +210,9 @@ if ( class_exists( 'WPBakeryShortCode' ) ) {
         
         $params = array(
           'item' => (object)array(
+            'content_align' => $content_align,
             'heading' => $heading,
+            'description' => $description,
             'image' => !empty($image) ? wp_get_attachment_image($image, $size='full') : '',
             'video' => $video,
             'el_class' => $el_class,

@@ -189,78 +189,70 @@ if ( ! function_exists( 'wpuxss_eml_tax_options_validate' ) ) {
 
 
 /**
- *  wpuxss_eml_ajax_query_attachments
+ *  wpuxss_eml_ajax_query_attachments_args
  *
- *  Based on /wp-admin/includes/ajax-actions.php
- *
- *  @since    1.0
- *  @created  03/08/13
+ *  @since    2.3.2
+ *  @created  24/09/16
  */
 
-add_action( 'wp_ajax_query-attachments', 'wpuxss_eml_ajax_query_attachments', 0 );
+add_filter( 'ajax_query_attachments_args', 'wpuxss_eml_ajax_query_attachments_args' );
 
-if ( ! function_exists( 'wpuxss_eml_ajax_query_attachments' ) ) {
+if ( ! function_exists( 'wpuxss_eml_ajax_query_attachments_args' ) ) {
 
-    function wpuxss_eml_ajax_query_attachments() {
+    function wpuxss_eml_ajax_query_attachments_args( $query ) {
 
-        global $wp_version;
-
-        if ( ! current_user_can( 'upload_files' ) )
-            wp_send_json_error();
-
-        $query = isset( $_REQUEST['query'] ) ? (array) $_REQUEST['query'] : array();
-
+        $wpuxss_eml_taxonomies = get_option( 'wpuxss_eml_taxonomies', array() );
         $uncategorized = ( isset( $query['uncategorized'] ) && $query['uncategorized'] ) ? 1 : 0;
+        $tax_query = array();
 
 
-        $query = array_intersect_key( $query, array_flip( array(
-            's', 'order', 'orderby', 'posts_per_page', 'paged', 'post_mime_type',
-            'post_parent', 'post__in', 'post__not_in', 'year', 'monthnum'
-        ) ) );
+        foreach ( get_object_taxonomies( 'attachment', 'object' ) as $taxonomy ) {
 
-        foreach ( get_object_taxonomies( 'attachment', 'names' ) as $taxonomy ) {
+            if ( ! array_key_exists( $taxonomy->name, $wpuxss_eml_taxonomies ) ) {
+                continue;
+            }
 
             if ( $uncategorized ) {
 
-                $terms = get_terms( $taxonomy, array( 'fields' => 'ids', 'get' => 'all' ) );
+                $terms = get_terms( $taxonomy->name, array( 'fields' => 'ids', 'get' => 'all' ) );
 
                 $tax_query[] = array(
-                    'taxonomy' => $taxonomy,
+                    'taxonomy' => $taxonomy->name,
                     'field' => 'term_id',
                     'terms' => $terms,
-                    'operator' => 'NOT IN',
+                    'operator' => 'NOT IN'
                 );
             }
             else {
 
-                if ( isset( $_REQUEST['query'][$taxonomy] ) && $_REQUEST['query'][$taxonomy] ) {
+                if ( isset( $query[$taxonomy->query_var] ) && $query[$taxonomy->query_var] ) {
 
-                    if( is_numeric( $_REQUEST['query'][$taxonomy] ) ||
-                        is_array( $_REQUEST['query'][$taxonomy] ) ) {
+                    if( is_numeric( $query[$taxonomy->query_var] ) ||
+                        is_array( $query[$taxonomy->query_var] ) ) {
 
                         $tax_query[] = array(
-                            'taxonomy' => $taxonomy,
+                            'taxonomy' => $taxonomy->name,
                             'field' => 'term_id',
-                            'terms' => (array) $_REQUEST['query'][$taxonomy]
+                            'terms' => (array) $query[$taxonomy->query_var]
                         );
                     }
-                    elseif ( 'not_in' === $_REQUEST['query'][$taxonomy] ) {
+                    elseif ( 'not_in' === $query[$taxonomy->query_var] ) {
 
-                        $terms = get_terms( $taxonomy, array('fields'=>'ids','get'=>'all') );
+                        $terms = get_terms( $taxonomy->name, array('fields'=>'ids','get'=>'all') );
 
                         $tax_query[] = array(
-                            'taxonomy' => $taxonomy,
+                            'taxonomy' => $taxonomy->name,
                             'field' => 'term_id',
                             'terms' => $terms,
                             'operator' => 'NOT IN',
                         );
                     }
-                    elseif ( 'in' === $_REQUEST['query'][$taxonomy] ) {
+                    elseif ( 'in' === $query[$taxonomy->query_var] ) {
 
-                        $terms = get_terms( $taxonomy, array('fields'=>'ids','get'=>'all') );
+                        $terms = get_terms( $taxonomy->name, array('fields'=>'ids','get'=>'all') );
 
                         $tax_query[] = array(
-                            'taxonomy' => $taxonomy,
+                            'taxonomy' => $taxonomy->name,
                             'field' => 'term_id',
                             'terms' => $terms,
                             'operator' => 'IN',
@@ -268,36 +260,20 @@ if ( ! function_exists( 'wpuxss_eml_ajax_query_attachments' ) ) {
                     }
                 }
             }
+
+            if ( isset( $query[$taxonomy->query_var] ) ) {
+                unset( $query[$taxonomy->query_var] );
+            }
+
         } // endforeach
 
         if ( ! empty( $tax_query ) ) {
+
             $tax_query['relation'] = 'AND';
             $query['tax_query'] = $tax_query;
         }
 
-        $query['post_type'] = 'attachment';
-
-        if ( MEDIA_TRASH
-            && ! empty( $_REQUEST['query']['post_status'] )
-            && 'trash' === $_REQUEST['query']['post_status'] ) {
-
-            $query['post_status'] = 'trash';
-        }
-        else {
-
-            $query['post_status'] = 'inherit';
-        }
-
-        if ( current_user_can( get_post_type_object( 'attachment' )->cap->read_private_posts ) )
-            $query['post_status'] .= ',private';
-
-        $query = apply_filters( 'ajax_query_attachments_args', $query );
-        $query = new WP_Query( $query );
-
-        $posts = array_map( 'wp_prepare_attachment_for_js', $query->posts );
-        $posts = array_filter( $posts );
-
-        wp_send_json_success( $posts );
+        return $query;
     }
 }
 
@@ -587,31 +563,37 @@ if ( ! function_exists( 'wpuxss_eml_attachment_fields_to_edit' ) ) {
 
         $wpuxss_eml_tax_options = get_option('wpuxss_eml_tax_options');
 
-        foreach( $form_fields as $field => $args ) {
 
-            if ( isset( $args['hierarchical'] ) &&
-                 function_exists( 'wp_terms_checklist' ) &&
-                 ( (bool) $wpuxss_eml_tax_options['edit_all_as_hierarchical'] || (bool) $args['hierarchical'] ) ) {
+        if ( function_exists( 'wp_terms_checklist' ) ) {
 
-                ob_start();
+            foreach( $form_fields as $field => $args ) {
 
-                    wp_terms_checklist( $post->ID, array( 'taxonomy' => $field, 'checked_ontop' => false, 'walker' => new Walker_Media_Taxonomy_Checklist() ) );
+                if ( (bool) $wpuxss_eml_tax_options['edit_all_as_hierarchical'] || (bool) $args['hierarchical'] ) {
 
-                    $content = ob_get_contents();
+                    ob_start();
 
-                    if ( $content )
-                        $html = '<ul class="term-list">' . $content . '</ul>';
-                    else
-                        $html = '<ul class="term-list"><li>No ' . $args['label'] . ' found.</li></ul>';
+                        wp_terms_checklist( $post->ID, array( 'taxonomy' => $field, 'checked_ontop' => false, 'walker' => new Walker_Media_Taxonomy_Checklist() ) );
 
-                ob_end_clean();
+                        $content = ob_get_contents();
 
-                unset( $form_fields[$field]['value'] );
+                        if ( $content )
+                            $html = '<ul class="term-list">' . $content . '</ul>';
+                        else
+                            $html = '<ul class="term-list"><li>No ' . $args['label'] . ' found.</li></ul>';
 
-                $form_fields[$field]['input'] = 'html';
-                $form_fields[$field]['html'] = $html;
-            }
-        }
+                    ob_end_clean();
+
+                    unset( $form_fields[$field]['value'] );
+
+                    $form_fields[$field]['input'] = 'html';
+                    $form_fields[$field]['html'] = $html;
+                }
+                else {
+                    $values = wp_get_object_terms( $post->ID, $field, array( 'fields' => 'names' ) );
+                    $form_fields[$field]['value'] = join(', ', $values);
+                } // if
+            } // foreach
+        } // if
 
         return $form_fields;
     }

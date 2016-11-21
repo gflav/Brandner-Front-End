@@ -1,0 +1,25 @@
+
+#brandnerdesign-home-slideshow {
+  
+  li.slideshow--right {
+    
+    .row {
+      
+      left:auto;
+      bottom:10px;
+      right:15px;
+      
+      @media #{$sm} {
+        
+        top:50%;
+        bottom:auto;
+        transform: translateY(-50%);
+        
+        right:55px;
+        
+      }
+
+    }
+  }
+  
+}

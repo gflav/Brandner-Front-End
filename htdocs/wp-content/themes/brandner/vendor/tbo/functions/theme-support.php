@@ -43,14 +43,15 @@ function tbo_setup_theme() {
   add_image_size('finishes-large', 290, 290, true); // finish tooltip
   add_image_size('finishes-thumb', 33, 33, true); // finish tile thumb
   
+  // projects
+  add_image_size('portfolio-large', 910, 385, true ); // used on project template pages
+  
 	// collections
-  add_image_size('portfolio-large', 910, 385, true ); // TODO: check if needed
-  add_image_size('portfolio-small', 130, 160, true ); // TODO: check if needed
-  add_image_size('portfolio-slideshow', 700, 470 ); // TODO: remove
+  add_image_size('product-thumb', 277, 184, $crop=TRUE);
 	
 	// product detail page :: gallery
-  add_image_size('viewer-large', 873, 471 );
-  add_image_size('viewer-thumb', 120, 120, $crop=true);
+  add_image_size('viewer-large', 873, 471);
+  add_image_size('viewer-thumb', 160, 160);
   
   // team members
   add_image_size('profile-photo', 160, 200, $crop=TRUE);

@@ -1,0 +1,30 @@
+
+/**
+ * Print products & projects.
+ */
+
+@media print {
+  
+  body {
+    background:none;
+  }
+  
+  #site-content {
+    background:none;
+    padding:0;
+    margin:0;
+  }
+  
+  header, footer, .product-gallery-thumbs-container, .product-detail-container {
+    display:none;
+  }
+
+  h1, p {
+    color:#000;
+  }
+  
+  p {
+    margin-top:15px;
+  }
+  
+}

@@ -1,4 +1,12 @@
 
+.hidden_label {
+    
+  label {
+    display:none;
+  }
+  
+}
+
 input{
   background-color: $brandnerdesign-input-bg;
   width: 100%;
@@ -34,4 +42,24 @@ body.page-id-31{
   input{
      margin-bottom: 10px;
    }
+}
+
+/* Gravity forms error handling - February 5, 2014 */
+/* ############################################### */
+
+/* Make the error stand out */
+.gfield_error {
+  position: relative;
+}
+/* Prepend the error message to the missing but required field */
+.gfield_error:before {
+  position:absolute;
+	bottom:-20px;
+  content: "Required";
+	color: #b94a48;
+}
+
+/* Hide the error message since we're displaying it above */
+.validation_error, .validation_message {
+	display:none;
 }

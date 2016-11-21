@@ -157,47 +157,6 @@ function bd_register_post_types(){
 		'show_in_nav_menus' => true,
 	));
 
-	register_post_type('limited', array(
-		'label' => 'Limited',
-		'labels' => array(
-			'name' => 'Limited',
-			'singular_name' => 'Limited Item',
-			'add_new' => 'Add new',
-			'add_new_item' => 'Add new Limited Item',
-			'edit_item' => 'Edit Limited Item',
-			'new_item' => 'New Limited Item',
-			'view_item' => 'View Limited Item',
-			'search_items' => 'Search Limited',
-			'not_found' => 'No Limited found',
-			'not_found_in_trash' => 'No Limited found in Trash',
-		),
-		'description' => 'Limited items for order.',
-		'public' => true,
-		'publicly_queryable' => true,
-		'exclude_from_search' => true,
-		'show_ui' => true,
-		'show_in_menu' => true,
-		'menu_position' => 6,
-		'menu_icon' => get_stylesheet_directory_uri().'/vendor/tbo/images/admin/limited-icon.png',
-		'capability_type' => 'post',
-		'hierarchial' => false,
-		'supports' => array('title', 'editor', 'revisions'),
-		'has_archive' => true,
-		'rewrite' => array(
-			'slug' => 'limited',
-			'with_front' => true,
-			'feeds' => true,
-			'pages' => true,
-		),
-		'query_var' => true,
-		'can_export' => true,
-		'show_in_nav_menus' => true,
-    /** REST API **/
-    'show_in_rest'       => true,
-    'rest_base'          => 'limited',
-    'rest_controller_class' => 'WP_REST_Posts_Controller',
-	));
-
 	register_post_type('project', array(
 		'label' => 'Portfolio',
 		'labels' => array(

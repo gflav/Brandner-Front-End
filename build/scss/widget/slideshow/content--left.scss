@@ -1,0 +1,22 @@
+
+#brandnerdesign-home-slideshow {
+  
+  li.slideshow--left {
+    
+    .row {
+      
+      left:10px;
+      top:auto;
+      bottom:20px;
+      
+      @media #{$sm} {
+        
+        left:55px;
+        bottom:50px;
+        
+      }
+
+    }
+  }
+  
+}

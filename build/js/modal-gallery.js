@@ -34,42 +34,62 @@
     
     listen: function() {
       
+      $(document).on('modal.close', function($evt, $name) {
+        if($name == 'gallery') {
+          $modal.remove('gallery');
+        }
+      });
+      
       $('.trigger-modal-video').click(function($evt) {
         $evt.preventDefault();
         var $this = $(this);
+        if($this.data('loading')) {
+          return;
+        }
+        $this.data('loading', 1);
         var $items = [{
           type: 'video',
           embed: $tbo.convertMedia($this.attr('data-video'), {autoplay: 1})
         }];
         $modal.open('gallery', {html: $controller.template({items: $items, count: $items.length})});
-        // get rid of the modal from the dom
-        $modal.getInstance('gallery').on('modal.close', function() {
-          $modal.remove('gallery');
-        });
+        $this.data('loading', 0);
       });
       
       $('.btn-gallery,.trigger-gallery').click(function($evt) {
         $evt.preventDefault();
         var $this = $(this);
+        if($this.data('loading')) {
+          return;
+        }
+        $this.data('loading', 1);
         var $title = $this.attr('title');
         $.ajax({
           url: $this.attr('data-route')
         }).done(function($response) {
           
+          $this.data('loading', 0);
+          
           var $modal_name = 'gallery';
           var $items = $controller.parseGalleryItems($response);
           
-          console.log('gallery', $title, $items);
-          
           $modal.open($modal_name, {html: $controller.template({title: $title, items: $items, count: $items.length})});
           
-          // TODO: get the gallery to work better, stupid image sizes and shiz.
-
-          $('.modal-gallery', $modal.getInstance($modal_name)).css('visibility', 'hidden');
+          var $gallery = $('.modal-gallery', $modal.getInstance($modal_name).instance);
           
-          setTimeout(function(){
+          var $gallery_items = $('.modal-gallery-item', $gallery);
+          $gallery_items.css('visibility', 'hidden');
+          
+          // loader
+          $gallery.css('height', '120px');
+          $gallery.prepend('<div class="brandner-loader"></div>');
+          
+          $gallery.imagesLoaded().always(function() {
 
-            var $gallery = $('.modal-gallery', $modal.getInstance($modal_name)).slick({
+            // remove loader
+            $gallery.css('height', 'auto');
+            $('.brandner-loader').remove();
+            
+            $gallery.slick({
               infinite: true,
               autoplay:false,
               autoplaySpeed: brandnerdesign.setting.sliderSpeed,
@@ -84,19 +104,25 @@
               lazyLoad: 'ondemand',
             });
             
-            $gallery.css('visibility', 'visible');
+            $gallery_items.css('visibility', 'visible');
 
+            // update index number
             $gallery.on('afterChange', function($slick, $currentSlide) {
               var $idx = $currentSlide.currentSlide + 1;
               $('.modal-instance-gallery .current-item').text($idx);
             });
-
-            // get rid of the modal from the dom
-            $modal.getInstance($modal_name).on('modal.close', function() {
-              $modal.remove('gallery');
+            
+            // resize width
+            /*
+            $gallery.on('afterChange', function() {
+              var $image = $('.modal-instance-gallery .slick-active img');
+              $('.modal-instance-gallery .modal-gallery').css('width', $image.width()+'px');
+              var $outerWidth = $image.width()+60;
+              $('.modal-instance-gallery .modal-content').css('width', $outerWidth+'px');
             });
-
-          }, 500);
+            */
+            
+          });
 
         });
       });

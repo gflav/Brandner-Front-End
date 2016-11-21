@@ -47,6 +47,7 @@
 @import "buttons.scss";
 @import "tooltip.scss";
 @import "video.scss";
+@import "component/loader.scss";
 
 /** Forms **/
 @import "form.scss";
@@ -65,11 +66,20 @@
 @import "widget/email-signup.scss";
 
 /** Widget :: slideshow **/
-@import "widget/slideshow.scss";
+@import "widget/slideshow/slide.scss";
+@import "widget/slideshow/content--left.scss";
+@import "widget/slideshow/content--right.scss";
+@import "widget/slideshow/pager.scss"; // aka dots
 
 /** Modals **/
 @import "modal.scss";
-@import "modal-cart.scss";
 @import "modal-quote.scss";
 @import "modal-gallery.scss";
 @import "modal-gray.scss";
+
+/** Store **/
+@import "store/modal-cart.scss";
+@import "store/checkout.scss";
+
+/** Print **/
+@import "print/print-product.scss";

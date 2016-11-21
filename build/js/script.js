@@ -124,6 +124,17 @@
   
   function listen() {
     
+    $(document).on('click', '#wp-admin-bar-tbo-regenerate-thumbs a', function($evt) {
+      $evt.preventDefault();
+      var $this = $(this);
+      var $data = {
+        action: 'regenerate',
+      };
+      $.post($this.attr('href'), $data).done(function($response) {
+        console.log('Regeneration Completed, Doctor.', $response);
+      });
+    });
+    
     $('.btn-disabled').click(function($evt) {
       $evt.preventDefault();
     });
@@ -134,9 +145,21 @@
       var $this = $(this);
       var $url = $this.attr('href') || $this.attr('data-print');
       if ($url) {
+        // add print variable
+        if($url.indexOf('?') === -1) {
+          $url += '?';
+        } else {
+          $url += '&';
+        }
+        $url += 'print=true';
+        $url += '&cid='+Math.round(new Date().getTime() / 1000);
         // print url
         var $iframe_id = 'print-iframe';
-        var $iframe = $($templates.print.template({id: $iframe_id}));
+        var $iframe = $('#'+$iframe_id);
+        if($iframe.length > 0) {
+          $iframe.remove();
+        }
+        $iframe = $($templates.print.template({id: $iframe_id}));
         $('body').append($iframe);
         $iframe.attr('src', $url);
         $iframe.load(function() {
@@ -226,7 +249,7 @@
       var $href = $this.attr('data-href');
       if ($href) {
         var $modal_name = 'pillar-' + $post_id;
-        $modal.open($modal_name, {url: $href, selector: '#site-content > div', css_class: 'modal-gray modal-capability'});
+        $modal.open($modal_name, {ajax: true, url: '/wp-json/wp/v2/capability/'+$post_id, data: {id: $post_id}, selector: '#site-content > div', css_class: 'modal-gray modal-capability'});
       }
     });
     

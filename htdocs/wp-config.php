@@ -1,4 +1,7 @@
 <?php
+/** Enable W3 Total Cache */
+define('WP_CACHE', true); // Added by W3 Total Cache
+
 /** Enable W3 Total Cache Edge Mode */
 define('W3TC_EDGE_MODE', true); // Added by W3 Total Cache
 
@@ -21,7 +24,10 @@ define('W3TC_EDGE_MODE', true); // Added by W3 Total Cache
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
+
+define('WP_MEMORY_LIMIT', '256M');
+define('WP_MAX_MEMORY_LIMIT', '512M');
+
 
 if(file_exists(__DIR__.'/wp-config-tbo.php')) {
   require_once(__DIR__.'/wp-config-tbo.php');

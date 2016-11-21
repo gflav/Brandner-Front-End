@@ -3,7 +3,7 @@
 Plugin Name: Enhanced Media Library
 Plugin URI: http://wpUXsolutions.com
 Description: This plugin will be handy for those who need to manage a lot of media files.
-Version: 2.3.1
+Version: 2.3.2
 Author: wpUXsolutions
 Author URI: http://wpUXsolutions.com
 Text Domain: enhanced-media-library
@@ -27,7 +27,7 @@ global $wp_version,
 
 
 
-$wpuxss_eml_version = '2.3.1';
+$wpuxss_eml_version = '2.3.2';
 
 
 
@@ -83,7 +83,7 @@ if ( ! function_exists( 'wpuxss_eml_enhance_media_shortcodes' ) ) {
 
         $wpuxss_eml_lib_options = get_option('wpuxss_eml_lib_options');
 
-        $enhance_media_shortcodes = isset( $wpuxss_eml_lib_options['enhance_media_shortcodes'] ) ? (bool)$wpuxss_eml_lib_options['enhance_media_shortcodes'] : false;
+        $enhance_media_shortcodes = isset( $wpuxss_eml_lib_options['enhance_media_shortcodes'] ) ? (bool) $wpuxss_eml_lib_options['enhance_media_shortcodes'] : false;
 
         return $enhance_media_shortcodes;
     }
@@ -152,14 +152,15 @@ if ( ! function_exists( 'wpuxss_eml_on_init' ) ) {
         $wpuxss_eml_old_version = get_option( 'wpuxss_eml_version', null );
 
         if ( version_compare( $wpuxss_eml_version, $wpuxss_eml_old_version, '<>' ) ) {
-            update_option( 'wpuxss_eml_version', $wpuxss_eml_version );
-        }
 
-        if ( is_null( $wpuxss_eml_old_version ) ) {
-            wpuxss_eml_on_activation();
-        }
-        else {
-            wpuxss_eml_on_update();
+            update_option( 'wpuxss_eml_version', $wpuxss_eml_version );
+
+            if ( is_null( $wpuxss_eml_old_version ) ) {
+                wpuxss_eml_on_activation();
+            }
+            else {
+                wpuxss_eml_on_update();
+            }
         }
 
 
@@ -214,10 +215,15 @@ if ( ! function_exists( 'wpuxss_eml_on_wp_loaded' ) ) {
         $wpuxss_eml_taxonomies = get_option( 'wpuxss_eml_taxonomies', array() );
         $taxonomies = get_taxonomies( array(), 'object' );
 
+
         // discover 'foreign' taxonomies
         foreach ( $taxonomies as $taxonomy => $params ) {
 
-            if ( ! empty( $params->object_type ) && ! array_key_exists( $taxonomy,$wpuxss_eml_taxonomies ) && ! in_array( 'revision', $params->object_type ) && ! in_array( 'nav_menu_item', $params->object_type ) && $taxonomy !== 'post_format' && $taxonomy !== 'link_category' ) {
+            if ( ! empty( $params->object_type ) && ! array_key_exists( $taxonomy,$wpuxss_eml_taxonomies ) &&
+                 ! in_array( 'revision', $params->object_type ) &&
+                 ! in_array( 'nav_menu_item', $params->object_type ) &&
+                 $taxonomy !== 'post_format' &&
+                 $taxonomy !== 'link_category' ) {
 
                 $wpuxss_eml_taxonomies[$taxonomy] = array(
                     'eml_media' => 0,
@@ -390,42 +396,45 @@ if ( ! function_exists( 'wpuxss_eml_enqueue_media' ) ) {
         $terms_id_name_ready_for_script = wpuxss_eml_get_media_term_pairs( $terms, 'id=>name' );
 
 
-        foreach ( $media_taxonomies as $taxonomy ) {
+        if ( function_exists( 'wp_terms_checklist' ) ) {
 
-            $taxonomy_terms = array();
+            foreach ( $media_taxonomies as $taxonomy ) {
+
+                $taxonomy_terms = array();
 
 
-            ob_start();
+                ob_start();
 
-                wp_terms_checklist( 0, array( 'taxonomy' => $taxonomy->name, 'checked_ontop' => false, 'walker' => new Walker_Media_Taxonomy_Uploader_Filter() ) );
+                    wp_terms_checklist( 0, array( 'taxonomy' => $taxonomy->name, 'checked_ontop' => false, 'walker' => new Walker_Media_Taxonomy_Uploader_Filter() ) );
 
-                $html = '';
-                if ( ob_get_contents() != false ) {
-                    $html = ob_get_contents();
+                    $html = '';
+                    if ( ob_get_contents() != false ) {
+                        $html = ob_get_contents();
+                    }
+
+                ob_end_clean();
+
+
+                $html = str_replace( '}{', '},{', $html );
+                $html = '[' . $html . ']';
+                $taxonomy_terms = json_decode( $html, true );
+
+                $media_taxonomies_ready_for_script[$taxonomy->name] = array(
+                    'singular_name' => $taxonomy->labels->singular_name,
+                    'plural_name'   => $taxonomy->labels->name,
+                    'term_list'     => $taxonomy_terms,
+                    'terms'         => $terms_id_name_ready_for_script
+                );
+
+
+                if ( (bool) $wpuxss_eml_taxonomies[$taxonomy->name]['media_uploader_filter'] ) {
+                    $filter_taxonomy_names_ready_for_script[] = $taxonomy->name;
                 }
 
-            ob_end_clean();
-
-
-            $html = str_replace( '}{', '},{', $html );
-            $html = '[' . $html . ']';
-            $taxonomy_terms = json_decode( $html, true );
-
-            $media_taxonomies_ready_for_script[$taxonomy->name] = array(
-                'singular_name' => $taxonomy->labels->singular_name,
-                'plural_name'   => $taxonomy->labels->name,
-                'term_list'     => $taxonomy_terms,
-                'terms'         => $terms_id_name_ready_for_script
-            );
-
-
-            if ( (bool) $wpuxss_eml_taxonomies[$taxonomy->name]['media_uploader_filter'] ) {
-                $filter_taxonomy_names_ready_for_script[] = $taxonomy->name;
-            }
-
-            if ( ! (bool) $wpuxss_eml_taxonomies[$taxonomy->name]['media_popup_taxonomy_edit'] ) {
-                $compat_taxonomies_to_hide[] = $taxonomy->name;
-            }
+                if ( ! (bool) $wpuxss_eml_taxonomies[$taxonomy->name]['media_popup_taxonomy_edit'] ) {
+                    $compat_taxonomies_to_hide[] = $taxonomy->name;
+                }
+            } // foreach
         }
 
 

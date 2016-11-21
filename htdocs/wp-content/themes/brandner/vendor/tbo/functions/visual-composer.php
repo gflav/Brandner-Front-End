@@ -5,6 +5,27 @@ if(!function_exists('vc_map')) {
   return;
 }
 
+// process shortcodes via rest api
+add_action( 'rest_api_init', function () {
+   register_rest_field(
+          'capability',
+          'content',
+          array(
+                 'get_callback'    => 'compasshb_do_shortcodes',
+                 'update_callback' => null,
+                 'schema'          => null,
+          )
+       );
+});
+function compasshb_do_shortcodes( $object, $field_name, $request )
+{
+   WPBMap::addAllMappedShortcodes(); // This does all the work
+   global $post;
+   $post = get_post ($object['id']);
+   $output['rendered'] = apply_filters( 'the_content', $post->post_content );
+   return $output;
+}
+
 // a simple promo image with caption & link
 vc_map( array(
    "name" => __("Promo Image"),

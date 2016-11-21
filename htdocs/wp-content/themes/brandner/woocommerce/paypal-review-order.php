@@ -3,6 +3,10 @@
  * Review Order
  */
 
+if(!function_exists('wc_add_notice')) {
+  return;
+}
+
 global $woocommerce;
 $checked = get_option('woocommerce_enable_guest_checkout');
 $checkout_form_data = maybe_unserialize(WC()->session->checkout_form);

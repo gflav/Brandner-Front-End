@@ -34,8 +34,6 @@
   text-align:left;
   
   .details {
-    padding-left: 10px;
-    padding-right:10px;
     font-size:14px;
   }
   
@@ -58,6 +56,18 @@
     
     li:not(:first-child) {
       margin-top:10px;
+    }
+    
+  }
+  
+}
+
+.share-icons {
+    
+  a {
+    
+    &:hover, &:active {
+      color:#1c1c1c;
     }
     
   }

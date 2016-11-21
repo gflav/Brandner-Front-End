@@ -29,8 +29,16 @@ window.eml = window.eml || { l10n: {} };
 
             original.controllerLibrary.activate.apply( this, arguments );
 
+            wp.Uploader.queue.on( 'add', this.beforeUpload, this );
             wp.Uploader.queue.on( 'reset', this.afterUpload, this );
     	},
+
+        beforeUpload: function() {
+
+            if ( wp.Uploader.queue.length == 1 ) {
+                $('.attachment-filters:has(option[value!="all"]:selected)').val( 'all' ).change();
+            }
+        },
 
         afterUpload: function() {
 
@@ -42,8 +50,6 @@ window.eml = window.eml || { l10n: {} };
             if ( 'menuOrder' === orderby ) {
                 library.saveMenuOrder();
             }
-
-            $('.attachment-filters:has(option[value!="all"]:selected)').val( 'all' ).change();
 
             library.reset( library.models );
 

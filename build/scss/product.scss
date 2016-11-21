@@ -3,6 +3,13 @@
   
   .post-content {
     
+    h1 {
+      text-transform:uppercase;
+      font-size:15px;
+      line-height:20px;
+      font-family: ProximaNova-Semibold;
+    }
+    
     color:$product-text-color;
   
     p, li {
@@ -47,39 +54,24 @@
 
 .product-gallery-thumbs-container {
   
+  position: relative;
+  
   background-color:$product-thumb-bg;
   background-image: url(../images/brandnerdesign-product-thumbnail-bg.png);
   background-size: cover;
+  
   margin-top:40px;
-  padding-left:30px;
-  position: relative;
 
   @media #{$lg} {
-    padding-left:$grid-spacing;
     margin-right:35px;
   }
 
-  .product-gallery-thumbs-container-headline{
+  .product-gallery-thumbs-container-headline {
     min-height: 80px;
     height: 100%;
   }
-
-  
-  h1 {
-    text-transform:uppercase;
-    font-size:15px;
-    line-height:20px;
-    font-family: ProximaNova-Semibold;
-    margin-bottom:0;
-    position: absolute;
-    top:50%;
-    transform: translateY(-50%);
-  }
   
   ul {
-    
-    
-    float:right;
     
     li {
       
@@ -87,15 +79,31 @@
       width: 80px;
       height: 80px;
       overflow: hidden;
-
-      a{
-        width: 100%;
-        height: 100%;
-
-        img{
-          width: 100%;
-        }
+      
+      margin-right:2px;
+      
+      &:last-child {
+        margin-right:0;
       }
+
+      a {
+        
+        width: 80px;
+        height:80px;
+        line-height:76px;
+        
+        background-color:#000;
+        text-align:center;
+
+        img {
+          width:auto;
+          max-width:100%;
+          height:auto;
+          max-height:100%;
+        }
+        
+      }
+      
     }
     
   }
@@ -103,8 +111,8 @@
 
   .product-thumbs {
 
-    li{
-      transition: all 0.3s $brandner-easing;
+    li {
+      //transition: all 0.3s $brandner-easing;
     }
 
     li a:hover {
@@ -112,10 +120,11 @@
       outline-offset: -4px;
     }
 
-    li a.active{
+    li a.active {
       outline: 4px solid #fff;
       outline-offset: -4px;
     }
+    
   }
 
 }
@@ -157,21 +166,63 @@
   }
   
   .product-finish {
+    
     overflow: hidden;
     display: inline-block;
     float: left;
 
     &:hover{
       img{
-        filter: grayscale(0%);
-        -webkit-filter: grayscale(0%);
+        //filter: grayscale(0%);
       }
     }
     
     img {
-      transition: 0.3s $brandner-easing;
-      filter: grayscale(100%);
-      -webkit-filter: grayscale(100%);
+      //transition: 0.3s $brandner-easing;
+      //filter: grayscale(100%);
+    }
+    
+  }
+  
+  .col-first {
+    
+    padding-top:10px;
+    padding-left:15px;
+    padding-right:15px;
+    
+    text-align:center;
+    
+    img {
+      max-width:100%;
+      width:100%;
+      height:auto;
+    }
+    
+  }
+  
+  .col-second {
+    
+    padding-top:15px;
+    padding-left:15px;
+    padding-right:15px;
+    
+  }
+  
+  @media #{$sm} {
+    
+    .col-first {
+      float:left;
+      width:50%;
+      text-align:left;
+      padding-top:0;
+    }
+    
+    .col-second {
+      float:left;
+      width:50%;
+      padding-top:0;
+      padding-left:0;
+      padding-right:25px;
     }
     
   }

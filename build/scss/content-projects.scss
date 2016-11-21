@@ -125,6 +125,22 @@
   }
 
   @media #{$lg} {
+    
+    ul {
+      
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height:200px;
+      
+      &.flex-no {
+        display:block;
+        flex-direction: inherit;
+        flex-wrap: inherit;
+        max-height: none;
+      }
+      
+    }
 
     padding: $grid-spacing;
     padding-top:0;

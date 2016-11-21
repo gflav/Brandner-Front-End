@@ -20,6 +20,8 @@ add_action('pre_get_posts', 'tbo_pre_get_posts');
 function tbo_pre_get_posts($wp_query){
   // all pages unlimited except for search
   if(in_array(tbo_arg(0), ['collections', 'materials'])) {
+    $wp_query->set( 'order', 'ASC' );
+    $wp_query->set( 'orderby', 'menu_order' );
     $wp_query->set('posts_per_page', -1);
   }
   // enable finish to be visible on the taxonomy page /materials/steel/[sub]

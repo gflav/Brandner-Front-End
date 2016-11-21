@@ -9,9 +9,9 @@
     source: null,
     template: null,
     
+    // TODO: phase out instance because array stores the object
     instance: null, // current instance
-    instances: {},
-    queue: [],
+    instances: [],
     
     init: function() {
       this.setup();
@@ -32,24 +32,15 @@
       // close most recent modal
       $(document).keyup(function($evt) {
         if($evt.keyCode == brandnerdesign.KEYCODE_ESC) {
-          if($modal.queue.length > 0) {
-            var $instance = $modal.queue.pop();
-            $instance.modal('hide').trigger('modal.close');
-            $modal.queue.push($instance); // TODO:
-            // TODO: make sure bs.close is triggered
-          }
+          $modal.close();
         }
       });
       
-      // outside of modal click to close
-      // TODO: 
-      //$(document).on('click', '.modal-dialog', function($evt) {
-        //$evt.preventDefault();
-        //$modal.close();
-      //});
+      // NOTE: need to use default click outside to close
+      //       putting your own doesn't work
       
       // generic way to trigger a modal
-      $(document).on('click', 'li.trigger-modal a,a.trigger-modal', function($evt) {
+      $(document).on('click', 'li.trigger-modal a,a.trigger-modal,.terms_chkbox', function($evt) {
         $evt.preventDefault();
         var $this = $(this);
         var $modal_name = $.md5($this.attr('href'));
@@ -59,8 +50,7 @@
       $(document).on('click', '.trigger-modal-close', function($evt) {
         $evt.preventDefault();
         var $this = $(this);
-        var $modal_name = $this.closest('.modal').attr('data-instance');
-        $modal.close($modal_name);
+        $this.closest('.modal').modal('hide');
       });
       
       $(document).on('show.bs.modal', '.modal', function() {
@@ -72,28 +62,46 @@
 
       $(document).on('hide.bs.modal', '.modal', function() {
         var $this = $(this);
-        $this.removeClass('animate');
+        $modal.close($this);
       });
       
     },
 
     addInstance: function($name, $instance) {
-      this.instances[$name] = $instance; // TODO: use queue
-      this.queue.push($instance);
+      this.instances.push({
+        name: $name,
+        instance: $instance
+      });
+      return this;
+    },
+    
+    exists: function($name) {
+      return (this.getInstance($name) !== false);
     },
     
     getInstance: function($name) {
       if ($name) {
-        return this.instances[$name];
+        var $instances = $.grep(this.instances, function($inst) {
+          return $inst.name === $name;
+        });
+        return $instances.length > 0 ? $instances.pop() : false;
       }
       return this.instance;
     },
-
-
-    exists: function($name) {
-      return this.instances && this.instances[$name];
-    },
     
+    popInstance: function($name) {
+      var $instance = null;
+      this.instances = $.grep(this.instances, function($inst) {
+        if($name === $inst.name) {
+          $instance = $inst.instance;
+          return false;
+        } else {
+          return true;
+        }
+      });
+      return $instance;
+    },
+
     open: function($name, $o) {
 
       var $deferred = $.Deferred();
@@ -103,6 +111,8 @@
         // defaults
         
         var $defaults = {
+          ajax: false,
+          data: null,
           url: null,
           html: null,
           selector: null,
@@ -119,7 +129,19 @@
         
         this.instance = $('.modal[data-instance="'+$name+'"]');
         
-        if ($options.url) {
+        if($options.ajax) {
+          
+          $.get($options.url, $options.data).done(function($response) {
+            if($response.content.rendered) {
+              $('.modal-inner', $modal.instance).html($response.content.rendered);
+              $modal.instance.modal('show');
+              $deferred.resolve();
+            }
+          });
+          
+        }
+        
+        if ($options.url && !$options.ajax) {
           var $url = $options.url;
           if(!$options.cache) {
             if($url.indexOf('?') !== -1) {
@@ -134,10 +156,10 @@
             var $content = $('#site-content', $html);
             if($content.length > 0) {
               // remove #site-content
-              $('.modal-inner', this.instance).html($content.html());
+              $('.modal-inner', $modal.instance).html($content.html());
             }
             if($options.footer) {
-              $('.modal-inner', this.instance).append($options.footer);
+              $('.modal-inner', $modal.instance).append($options.footer);
             }
             $modal.instance.modal('show');
             $deferred.resolve();
@@ -156,7 +178,8 @@
         
         // reopen
         
-        this.getInstance($name).modal('show');
+        this.instance = this.getInstance($name).instance;
+        this.instance.modal('show');
         $deferred.resolve();
         
       }
@@ -166,19 +189,35 @@
     },
     
     close: function($name) {
-      if ($name && this.exists($name)) {
-        this.getInstance($name).modal('hide').trigger('modal.close');
+      var $instance = null;
+      if($.type($name) == 'object') {
+        $instance = {
+          name: $name.attr('data-instance'),
+          instance: $name,
+          closed: true
+        };
+      } else if ($name && this.exists($name)) {
+        $instance = this.getInstance($name);
       } else {
         // close last instance
-        this.getInstance().modal('hide').trigger('modal.close');
+        $instance = this.getInstance();
       }
+      if($instance) {
+        if(!$instance.closed) {
+          $instance.instance.modal('hide');
+        }
+        $instance.instance.removeClass('animate').trigger('modal.close', [$instance.name, $instance.instance]);
+      }
+      return this;
     },
     
     // remove from $modal instance list, and dom
     remove: function($name) {
       if(this.exists($name)) {
-        this.getInstance($name).remove();
-        delete this.instances[$name];
+        var $instance = this.popInstance($name);
+        if($instance) {
+          $instance.remove();  
+        }
       }
       return this;
     }

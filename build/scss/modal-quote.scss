@@ -12,7 +12,7 @@
     margin-bottom: 20px;
   }
 
-  h4, p{
+  h4, p, li {
     font-family: ProximaNova-Medium;
     line-height: 20px;
   }
@@ -117,7 +117,7 @@
     }
 
     input{
-      background-color: transparent;
+      background-color: #000; // NOTE: so you don't see stuff behind it
       width: 100%;
       font-size: 14px;
       color: $brandnerdesign-aqua;
@@ -126,9 +126,9 @@
 
     }
 
-    textarea{
+    textarea, .textarea {
       font-family: ProximaNova-Semibold;
-      background-color: transparent;
+      background-color: #000; // NOTE: so you don't see stuff behind it
       width: 100%;
       height: 150px;
       resize: none;
@@ -137,5 +137,16 @@
       margin-bottom: 20px;
       padding: 15px;
     }
+    
+    .textarea {
+      
+      strong {
+        
+        color:#fff;
+        
+      }
+      
+    }
+    
   }
 }

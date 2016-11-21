@@ -14,10 +14,13 @@
     <?php endif; ?>
   <?php endif; ?>
   <?php if($download = tbo_get_field('download', $post->ID)): ?>
-  <a class="btn btn-download" href="<?php echo $download; ?>" target="_blank">Download Tear Sheet</a>
+  <?php if(is_array($download)): ?>
+    <?php $download = $download['url']; ?>
+  <?php endif; ?>
+  <a class="btn btn-download" href="<?php echo $download; ?>" target="_blank">Download Specs</a>
   <?php endif; ?>
   <a class="btn btn-share">Share</a>
-  <a class="btn btn-print" data-print="<?php echo (isset($download) ? $download : ''); ?>">Print</a>
+  <a class="btn btn-print" href="<?php echo get_the_permalink($post); ?>">Print</a>
 </div>
 <?php elseif($type == 'limited'): ?>
   <?php /** limited post type **/ ?>

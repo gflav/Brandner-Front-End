@@ -1,0 +1,84 @@
+
+#brandnerdesign-home-slideshow {
+
+ #brandnerdesign-home-slideshow-pager {
+    
+    display:none;
+    
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    background-color: rgba(28,28,28, 0.7);
+
+    #brandnerdesign-home-slideshow-pager-title {
+      font-size: 11px;
+      line-height: 40px;
+      padding: 0 20px 0px 20px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .slick-dots {
+      
+      margin-top: 10px;
+      float: right;
+      
+      li{
+        
+        float: left;
+        cursor: pointer;
+
+        &.slick-active, &:hover{
+          span {
+            background-color: #fff;
+          }
+        }
+        
+        margin-right:10px;
+
+        span{
+          display: inline-block;
+          width: 13px;
+          height: 13px;
+          background-color: #595654;//#5a5754;
+          border: 2px solid #35312e; //#342a23;
+          margin: 5px;
+          transform: rotate(45deg);
+        }
+        
+      }
+    } // slick dots
+    
+    @media #{$sm} {
+      
+      display:block;
+      
+      #brandnerdesign-home-slideshow-pager-title {
+        font-size: 11px;
+        padding: 0 40px 0px 20px;
+      }
+      
+      .slick-dots {
+        
+        li {
+          
+          margin-right:20px;
+          
+          &:last-child {
+            margin-right:12px;
+          }
+          
+        }
+          
+      }
+       
+    }
+    
+    @media #{$lg} {
+      right: $grid-padding;
+    }
+
+  }
+  
+}

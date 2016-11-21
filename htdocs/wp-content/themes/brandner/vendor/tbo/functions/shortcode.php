@@ -24,6 +24,8 @@ function tbo_shortcode_content_list($atts, $content=NULL) {
   $posts = get_posts(array(
     'posts_per_page'	=> $posts_per_page,
     'post_type'			=> $post_type,
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
   ));
   
   $output = [];

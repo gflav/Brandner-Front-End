@@ -17,6 +17,9 @@ function tbo_shortcode_team_list($atts, $content=NULL) {
   $posts = get_posts(array(
     'posts_per_page' => $posts_per_page,
     'post_type' => $post_type,
+    // fixes custom sort
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
   ));
   
   $atts['posts'] = $posts;

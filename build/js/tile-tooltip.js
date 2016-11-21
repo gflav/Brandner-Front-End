@@ -32,7 +32,7 @@
         var $this = $(this);
         var $html = $('.product-finish-tooltip', $this).html();
         $this.tooltip({
-          placement: 'top',
+          placement: 'auto',
           html: true,
           title: $html,
           trigger: 'manual',
@@ -42,15 +42,12 @@
       
     },
     
-    // TODO:
     templates: function() {
       
     },
     
     listen: function() {
       
-      // TODO: close on ipad
-
       $('.product-finish', this.el).click(function($evt) {
         $evt.preventDefault();
         var $this = $(this);
@@ -60,13 +57,16 @@
       $('.product-finish', this.el).hover(
         function hoverOver() {
           var $this = $(this);
+          $('.product-finish').not($this).tooltip('hide');
           $this.tooltip('show');
         },
         function hoverOut() {
           var $this = $(this);
-          //$tbo.once(function() {
-            $this.tooltip('hide');
-          //}, 'product-finish-tooltip', 40000);
+          $tbo.once(function() {
+            if(!$('.product-finish:hover').length) {
+              $this.tooltip('hide');  
+            }
+          }, 'product-finish-tooltip', 1000);
         }
       );
       

@@ -24,6 +24,9 @@ $vendor_files = [
   'functions/woocommerce.php',
   'functions/menu-mobile.php',
   'functions/gravity-forms.php',
+  'functions/admin-bar.php',
+  // api
+  'functions/api/v1/regenerate.php',
 ];
 foreach($vendor_files as $file) {
 	locate_template("$vendor_path/$file", $load=TRUE, $require_once=TRUE);	

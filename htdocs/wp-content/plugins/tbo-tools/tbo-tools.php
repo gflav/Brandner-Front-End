@@ -12,8 +12,20 @@ Version: 1.0
 Author URI: https://thebarton.org/
 */
 
-require_once(__DIR__.'/shortcode.php');
-require_once(__DIR__.'/visual-composer/slideshow.php');
+define('TBO_TOOLS_PATH', __DIR__);
+
+$loader = [
+  'shortcode.php',
+  'post-type/wrapper.php',
+];
+
+foreach($loader as $file) {
+  require_once(TBO_TOOLS_PATH.'/'.$file);
+}
+
+if(function_exists('vc_map')) {
+  require_once(TBO_TOOLS_PATH.'/visual-composer/slideshow.php');
+}
 
 class TBO_Tools {
 
@@ -75,32 +87,32 @@ class TBO_Tools_Check {
 }
 
 class TBO_Tools_View {
-
-  protected $context;
-
-  /**
-   * Switches between a module or theme
-   * contetxt. i.e., you can reference this function
-   * from a module or from a theme.
-   */
-  public function centext($context=NULL) {
-    if(isset($context)) {
-      $this->context = $context;
-    }
-    return $this;
+  
+  static $paths;
+  
+  public function __construct() {
+    $this->loadViewPaths();
+  }
+  
+  // get all the paths available
+  // priority for now is first come first served
+  public function loadViewPaths() {
+    $paths =& self::$paths;
+    $paths = [tpath('views')];
+    $paths = apply_filters('tbo_tools_views_path', $paths);
   }
 
-  public function getContext() {
-    switch($this->context) {
-      default:
-        return tpath('views');
-    }
-  }
-
+  // TODO: cache path so you don't have to check for file_exists each time
   public function load($view_name, $vars=array()) {
 
-    $file = $this->getContext() . '/' . $view_name . '.tpl.php';
-    return $this->fetch($file, $vars);
+    foreach(self::$paths as $path) {
+      $file = "$path/$view_name.tpl.php";
+      if(file_exists($file)) {
+        return $this->fetch($file, $vars);
+      }
+    }
+    
+    return '';
 
   }
 
@@ -120,8 +132,8 @@ class TBO_Tools_View {
 
 // start shortcodes
 
-add_shortcode('view', 'tbo_tools_sc_view');
-function tbo_tools_sc_view($params) {
+add_shortcode('view', 'tbo_tools_view');
+function tbo_tools_view($params) {
   $name = array_shift($params);
   return bt()->view->load($name, $params);
 }

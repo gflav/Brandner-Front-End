@@ -3,16 +3,15 @@ var package = require('./package.json'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     jshint = require('gulp-jshint'),
-    minifyCSS = require('gulp-minify-css'),
     stripDebug = require('strip-debug'),
     runSequence = require('run-sequence'),
     uglify = require('gulp-uglify');
 
-var cssnano = require('gulp-cssnano');
+var csso = require('gulp-csso');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var notify = require('gulp-notify');
+//var notify = require('gulp-notify');
 
 var $vendor_js = [
   'build/js/lib/modernizr.3.3.1.custom.min.js',
@@ -21,7 +20,8 @@ var $vendor_js = [
   'build/js/lib/jssocials/jssocials.min.js',
   'build/js/lib/handlebars/handlebars-v4.0.5.js',
   'build/js/lib/jquery/jquery.md5.js',
-  'build/js/lib/jquery/jquery.easing.min.js'
+  'build/js/lib/jquery/jquery.easing.min.js',
+  'build/js/lib/jquery/jquery.storageapi.min.js'
 ];
 
 var $script_js = [
@@ -38,6 +38,9 @@ var $script_js = [
   'build/js/layout.js',
   'build/js/tile-tooltip.js',
   'build/js/menu-mobile.js',
+  'build/js/validate.js',
+  'build/js/payment.js',
+  'build/js/analytics.js',
 ];
 
 var $css_dir = 'htdocs/wp-content/themes/brandner/vendor/tbo/css';
@@ -51,9 +54,7 @@ gulp.task('styles', function () {
       browsers: ['> 1%', 'last 10 versions'],
       cascade: false
     }))
-    .pipe(minifyCSS({
-      keepBreaks:true
-    }))
+    .pipe(csso())
     .pipe(rename('all.css'))
     .pipe(gulp.dest('dist/css'))
     .pipe(gulp.dest($css_dir));
@@ -90,8 +91,8 @@ gulp.task('default', ['styles', 'scripts']);
 
 gulp.task('production', function() {
   runSequence(
-    ['styles',  'scripts-production'],
-    'remove-logging'
+    ['styles',  'scripts-production']
+    //'remove-logging'
   );
 });
 

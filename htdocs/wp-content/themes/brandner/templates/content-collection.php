@@ -29,11 +29,6 @@
 			));
 		}
     
-    // limited page is different
-    if((tbo_arg(0) == 'materials' && !tbo_arg(1))) {
-      $terms[] = get_term_by('slug', 'limited', $taxonomy);
-    }
-		
     // sub nav items
     $items = tbo_get_nav_sub($post->post_title, tbo_arg(0));
     

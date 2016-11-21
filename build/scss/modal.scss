@@ -23,6 +23,7 @@
 }
 
 .modal {
+  
   display: none;
   overflow: hidden;
   position: fixed;
@@ -33,12 +34,10 @@
   z-index: $zindex-modal;
   outline: 0;
   //background-color: rgba(0,0,0,.9);
-}
 
-// TODO:
-.modal:not(.modal-instance-cart):not(modal-instance-checkout){
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  
 }
 
 .trigger-modal-close {

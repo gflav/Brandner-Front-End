@@ -2,8 +2,8 @@
 Contributors: webbistro
 Tags: media library, media category, media categories, media gallery, gallery shortcode, media tag, media tags, media taxonomy, media taxonomies, media uploader, mime type, mime, mime types, file types, media types, media filter, attachment, gallery, image, images, media, ux, user experience, wp-admin, admin, taxonomy, taxonomies
 Requires at least: 4.5
-Tested up to: 4.6
-Stable tag: 2.3.1
+Tested up to: 4.6.1
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,7 +73,7 @@ You can see available translations and their progress here: https://translate.wo
 Assistance with translating is highly appreciated! If you'd like to be a translation editor of the PRO version please contact us on [wpuxsolutions.com](https://www.wpuxsolutions.com/support/create-new-ticket/)
 
 
-= Compatibility with Other Plugins =
+= Compatible with the Plugins: =
 
 * Advanced Custom Fields
 * WooCommerce
@@ -85,6 +85,7 @@ Assistance with translating is highly appreciated! If you'd like to be a transla
 * Jetpack Tiled Galleries
 * Simple Lightbox
 * Responsive Lightbox by dFactory
+* Justified Gallery
 
 
 Please let us know if you find any issue with the plugins from the list above or others.
@@ -161,6 +162,21 @@ Please notice that you use the Enhanced Media Library with other plugins that ad
 
 == Changelog ==
 
+= 2.3.2 =
+*Release Date - November 11, 2016*
+
+= Improvements =
+* Tag names are being used instead of slugs for non-hierarchical taxonomies to assign to media items
+
+= Bugfixes =
+* The bug preventing taxonomy filters to switch correctly on upload fixed
+* A few minor bugs fixed
+
+= Compatibility =
+* Compatibility with the Jetpack Slideshow added
+
+
+&nbsp;
 = 2.3.1 =
 *Release Date - August 9, 2016*
 
