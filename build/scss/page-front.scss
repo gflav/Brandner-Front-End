@@ -17,12 +17,9 @@
       
       >.vc_row:not(:first-child) {
         
-        padding-left:$grid-spacing-xs;
-        padding-right:$grid-spacing-xs;
         
         @media #{$sm} {
-          padding-left:0;
-          padding-right:0;
+
         }
         
       }

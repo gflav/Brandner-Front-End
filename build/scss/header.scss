@@ -69,9 +69,9 @@ header {
     display: inline-block;
     position: relative;
     
-    margin-top: 5px;
+    margin-top: 16px;
     
-    width:200px;
+    width:225px;
     height:50px;
     
     img {
@@ -82,18 +82,20 @@ header {
     }
 
     @media #{$lg} {
-      width:100%;
+      width:83%;
       height:auto;
-      margin-top: $header-logo-top-padding;
+      margin-top: 33px;
     }
 
   }
 
   #brandnerdesign-header-links-wrapper {
     float: right;
-    margin-top:13px;
+    margin-top:21px;
+    margin-right: 7px; 
     @media #{$lg} {
       margin-top:$grid-padding;  
+        margin-right: 0; 
     }
   }
 

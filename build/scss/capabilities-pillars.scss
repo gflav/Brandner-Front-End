@@ -1,12 +1,11 @@
 
 #brandnerdesign-capabilities-pillars {
 
-  padding-top: $grid-spacing-xs;
-  padding-bottom:$grid-spacing-xs;
-
+  padding: $grid-spacing-xs;
+    
   @media #{$lg} {
     padding: $grid-spacing;
-    padding-right:0;
+    x-margin: 0 40px;
   }
 
   img{
@@ -106,7 +105,7 @@
     .pillar-intro-container {
       
       h2 {
-        font-size: 36px;
+        font-size: 48px;
       }
       
     }
@@ -147,8 +146,9 @@
       
       h2 {
         
-        font-size: 48px;
-        line-height: 62px;
+        font-size: 43px;
+        line-height: 58px;
+        letter-spacing: 0.1em;
         
         br {
           display:block;
@@ -169,7 +169,7 @@
     
     margin-top:$grid-spacing-xs;
     
-    opacity:.8;
+    opacity:1;
     transition: opacity 0.2s $brandner-easing;
 
     &:after{
@@ -200,7 +200,7 @@
       font-size: 26px;
       position: absolute;
       text-transform: uppercase;
-      font-family: ProximaNova-Medium;
+      font-family: ProximaNova-Regular;
       letter-spacing: 1px;
       top: 50%;
       width: 100%;
