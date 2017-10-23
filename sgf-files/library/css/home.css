@@ -1,0 +1,8 @@
+@media only screen and (max-width: 767px){
+	.modal:not(.modal-instance-cart):not(modal-instance-checkout):not(.modal-instance-search):not(.modal-instance-simple):not(.modal-instance-quote):not(.modal-instance-gallery) .modal-body{
+		padding: 40px 0px;	
+	}
+	.modal:not(.modal-instance-cart):not(modal-instance-checkout):not(.modal-instance-search):not(.modal-instance-simple):not(.modal-instance-quote):not(.modal-instance-gallery) .modal-inner {
+		padding: 20px;
+	}
+}
